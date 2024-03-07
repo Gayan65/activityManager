@@ -1,5 +1,6 @@
 import express from "express";
 import "dotenv/config";
+import cors from "cors";
 import db from "./db/db.js";
 import taskRouter from "./controllers/task_controllers.js";
 
@@ -9,6 +10,7 @@ const app = express();
 const port = process.env.PORT;
 
 //API ROUTES MIDDLEWARES
+app.use(cors());
 app.use("/task", taskRouter);
 
 //BACKEND SEVER AND DATABASE CONNECTION

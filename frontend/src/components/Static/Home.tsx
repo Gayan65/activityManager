@@ -10,6 +10,9 @@ const Home = () => {
                 <Nav.Link href="/performance">Performance</Nav.Link>
                 <Nav.Link href="/notifications">Notifications</Nav.Link>
             </Nav>
+            <Container>{/* CURRENT TASKS VIEW */}</Container>
+            <Container>{/* PERFORMANCE VIEW */}</Container>
+            <Container>{/* NOTIFICATIONS TASKS VIEW */}</Container>
         </Container>
     );
 };

@@ -4,6 +4,7 @@ import Home from "./components/Static/Home";
 import TasksPage from "./components/Static/TasksPage";
 import Performance from "./components/Static/Performance";
 import Notifications from "./components/Static/Notifications";
+import ActivityPage from "./components/Static/ActivityPage";
 
 function App() {
     return (
@@ -19,6 +20,10 @@ function App() {
                     <Route
                         path="/notifications"
                         element={<Notifications />}
+                    ></Route>
+                    <Route
+                        path="/activities"
+                        element={<ActivityPage />}
                     ></Route>
                 </Routes>
             </BrowserRouter>

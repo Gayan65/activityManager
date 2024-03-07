@@ -33,7 +33,7 @@ const Home = () => {
         <Container>
             <Nav className="flex-column">
                 {/* LINKS TO PAGES START*/}
-                <Nav.Link href="/tasks">Tasks</Nav.Link>
+                <Nav.Link href="/tasks">Manage Tasks</Nav.Link>
                 <Nav.Link href="/performance">Performance</Nav.Link>
                 <Nav.Link href="/notifications">Notifications</Nav.Link>
                 {/* LINKS TO PAGES END*/}

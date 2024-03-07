@@ -3,26 +3,26 @@ import axios from "axios";
 import { Container, Spinner, ListGroup, Card } from "react-bootstrap";
 
 const ActivityPage = () => {
-    //DEFINE THE TASK OBJ
-    interface Task {
+    //DEFINE THE ACTIVITY OBJ
+    interface Activity {
         id: number;
-        name: string;
+        title: string;
     }
 
-    const [allTasks, setAllTasks] = useState<Task[] | null>(null);
+    const [allActivities, setAllActivities] = useState<Activity[] | null>(null);
     const [loader, setLoader] = useState(true);
 
     //CALLING APIS ONCE PAGE LOADED
     useEffect(() => {
-        //(GETTING ALL TASKS AND SET IT TO STATE)
+        //(GETTING ALL ACTIVITIES AND SET IT TO STATE)
         axios
-            .get("http://localhost:4000/task/all")
+            .get("http://localhost:4000/activity/all")
             .then((response) => {
                 if (response.data.success) {
-                    setAllTasks(response.data.tasks as Task[]);
+                    setAllActivities(response.data.activities as Activity[]);
                     setLoader(false);
                 } else {
-                    setAllTasks(null);
+                    setAllActivities(null);
                     setLoader(false);
                 }
             })
@@ -31,17 +31,17 @@ const ActivityPage = () => {
 
     return (
         <Container>
-            {/* MAP THE EXISTING TASKS, NEW TASKS */}
-            Task Manage Page
-            {/* ALL TASKS VIEW START*/}
+            {/* MAP THE EXISTING ACTIVITIES, NEW ACTIVITIES */}
+            Activity Manage Page
+            {/* ALL ACTIVITY VIEW START*/}
             <Card style={{ width: "18rem" }}>
                 <Card.Body>
                     <Card.Title>Active Tasks</Card.Title>
-                    {allTasks && allTasks.length > 0 ? (
+                    {allActivities && allActivities.length > 0 ? (
                         <ListGroup>
-                            {allTasks.map((task) => (
-                                <ListGroup.Item key={task.id}>
-                                    {task.name}
+                            {allActivities.map((activity) => (
+                                <ListGroup.Item key={activity.id}>
+                                    {activity.title}
                                 </ListGroup.Item>
                             ))}
                         </ListGroup>
@@ -51,7 +51,7 @@ const ActivityPage = () => {
                     {loader && <Spinner animation="border" />}
                 </Card.Body>
             </Card>
-            {/* ALL TASKS VIEW END*/}
+            {/* ALL ACTIVITY VIEW END*/}
         </Container>
     );
 };

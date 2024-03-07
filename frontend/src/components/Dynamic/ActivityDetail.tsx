@@ -25,7 +25,7 @@ const ActivityDetail = () => {
                 setLoader(false);
             })
             .catch((err) => console.log(err)); // ++ THIS WILL APPEAR ONCE THE PARAM.ID BECOME UNDEFINE (URL/ID BECOME NOT EX), NEED TO DIRECT TO THE ERROR PAGE
-    }, []);
+    }, [params.id]);
     return (
         <Container>
             Activity Detail Page

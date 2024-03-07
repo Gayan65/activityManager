@@ -5,6 +5,7 @@ import TasksPage from "./components/Static/TasksPage";
 import Performance from "./components/Static/Performance";
 import Notifications from "./components/Static/Notifications";
 import ActivityPage from "./components/Static/ActivityPage";
+import ActivityDetail from "./components/Dynamic/ActivityDetail";
 
 function App() {
     return (
@@ -24,6 +25,10 @@ function App() {
                     <Route
                         path="/activities"
                         element={<ActivityPage />}
+                    ></Route>
+                    <Route
+                        path="/activity/:id"
+                        element={<ActivityDetail />}
                     ></Route>
                 </Routes>
             </BrowserRouter>

@@ -36,11 +36,15 @@ const ActivityPage = () => {
             {/* ALL ACTIVITY VIEW START*/}
             <Card style={{ width: "18rem" }}>
                 <Card.Body>
-                    <Card.Title>Active Tasks</Card.Title>
+                    <Card.Title>Activity Manager</Card.Title>
                     {allActivities && allActivities.length > 0 ? (
                         <ListGroup>
                             {allActivities.map((activity) => (
-                                <ListGroup.Item key={activity.id}>
+                                <ListGroup.Item
+                                    action
+                                    key={activity.id}
+                                    href={`/activity/${activity.id}`}
+                                >
                                     {activity.title}
                                 </ListGroup.Item>
                             ))}

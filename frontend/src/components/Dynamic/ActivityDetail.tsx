@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Container, Spinner, Card } from "react-bootstrap";
 
 const ActivityDetail = () => {
@@ -13,6 +13,9 @@ const ActivityDetail = () => {
     //USE PARAMS TO FETCH THE ID FOR AXIOS CALL
     const params = useParams();
 
+    //USE FOR NAVIGATING TO URLS
+    const navigate = useNavigate();
+
     const [activity, setActivity] = useState<Activity | null>(null);
     const [loader, setLoader] = useState(true);
 
@@ -24,8 +27,8 @@ const ActivityDetail = () => {
                 setActivity(response.data.activity[0] as Activity);
                 setLoader(false);
             })
-            .catch((err) => console.log(err)); // ++ THIS WILL APPEAR ONCE THE PARAM.ID BECOME UNDEFINE (URL/ID BECOME NOT EX), NEED TO DIRECT TO THE ERROR PAGE
-    }, [params.id]);
+            .catch((err) => navigate("/error"));
+    }, [navigate, params.id]);
     return (
         <Container>
             Activity Detail Page

@@ -5,6 +5,7 @@ import {
     getAllTasks,
     getAllActiveTasks,
     getTaskFromId,
+    getTaskFromActivityId,
 } from "../services/task_services.js";
 
 const taskRouter = express.Router();
@@ -56,6 +57,23 @@ taskRouter.get("/:id", async (req, res) => {
         res.status(200).json({
             success: false,
             message: "task cannot be found",
+        });
+    }
+});
+
+//API GET ALL TASKS FROM AN ACTIVITY ID (activity -> task -> detail page)
+taskRouter.get("/activity/:id", async (req, res) => {
+    const tasks = await getTaskFromActivityId(req.params.id);
+    if (tasks.rowCount > 0) {
+        res.status(200).json({
+            success: true,
+            message: "tasks found successfully!",
+            tasks: tasks.rows,
+        });
+    } else {
+        res.status(200).json({
+            success: false,
+            message: "tasks cannot be found",
         });
     }
 });

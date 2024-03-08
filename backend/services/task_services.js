@@ -13,3 +13,9 @@ export const getAllActiveTasks = async () => {
     );
     return res;
 };
+
+//GET A TASK FROM TASK_ID - SQL
+export const getTaskFromId = async (taskId) => {
+    const res = await db.query(`SELECT * FROM task WHERE task.id = ${taskId}`);
+    return res;
+};

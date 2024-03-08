@@ -7,6 +7,7 @@ import Notifications from "./components/Static/Notifications";
 import ActivityPage from "./components/Static/ActivityPage";
 import ActivityDetail from "./components/Dynamic/ActivityDetail";
 import Error from "./components/Static/Error";
+import TaskDetail from "./components/Dynamic/TaskDetail";
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                         path="/activity/:id"
                         element={<ActivityDetail />}
                     ></Route>
+                    <Route path="/task/:id" element={<TaskDetail />}></Route>
                     <Route path="/error" element={<Error />}></Route>
                 </Routes>
             </BrowserRouter>

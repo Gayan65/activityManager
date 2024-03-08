@@ -1,0 +1,21 @@
+import React from "react";
+import { Navbar, Container, Nav } from "react-bootstrap";
+
+const NavBar = () => {
+    return (
+        <Navbar bg="dark" data-bs-theme="dark">
+            <Container>
+                <Navbar.Brand href="#home">Activity_Manager</Navbar.Brand>
+                <Nav className="me-auto">
+                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href="/tasks">Manage Tasks</Nav.Link>
+                    <Nav.Link href="/activities">Manage Activities</Nav.Link>
+                    <Nav.Link href="/performance">Performance</Nav.Link>
+                    <Nav.Link href="/notifications">Notifications</Nav.Link>
+                </Nav>
+            </Container>
+        </Navbar>
+    );
+};
+
+export default NavBar;

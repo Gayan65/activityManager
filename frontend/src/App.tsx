@@ -8,10 +8,12 @@ import ActivityPage from "./components/Static/ActivityPage";
 import ActivityDetail from "./components/Dynamic/ActivityDetail";
 import Error from "./components/Static/Error";
 import TaskDetail from "./components/Dynamic/TaskDetail";
+import NavBar from "./components/Dynamic/NavBar";
 
 function App() {
     return (
         <div className="App">
+            <NavBar />
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />}></Route>

@@ -40,7 +40,11 @@ const TasksPage = () => {
                     {allTasks && allTasks.length > 0 ? (
                         <ListGroup>
                             {allTasks.map((task) => (
-                                <ListGroup.Item key={task.id}>
+                                <ListGroup.Item
+                                    key={task.id}
+                                    action
+                                    href={`/task/${task.id}`}
+                                >
                                     {task.name}
                                 </ListGroup.Item>
                             ))}

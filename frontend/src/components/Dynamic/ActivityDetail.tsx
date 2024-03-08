@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Spinner, Card } from "react-bootstrap";
+import { Container, Spinner, Card, ListGroup } from "react-bootstrap";
 
 const ActivityDetail = () => {
     //DEFINE THE ACTIVITY OBJ
@@ -23,7 +23,7 @@ const ActivityDetail = () => {
     const navigate = useNavigate();
 
     const [activity, setActivity] = useState<Activity | null>(null);
-    const [tasks, setTasks] = useState<Task | null>(null);
+    const [tasks, setTasks] = useState<Task[] | null>(null);
     const [loader, setLoader] = useState(true);
 
     //FETCH THE ACTIVITY DATA ONE THE PAGE IS BEING RENDERED
@@ -41,8 +41,7 @@ const ActivityDetail = () => {
         axios
             .get(`http://localhost:4000/task/activity/${params.id}`)
             .then((response) => {
-                setTasks(response.data.tasks as Task);
-                //MAKE A CONSOLE.LOG TO SEE THE TASKS
+                setTasks(response.data.tasks as Task[]);
                 setLoader(false);
             })
             .catch((err) => navigate("/error"));
@@ -55,6 +54,19 @@ const ActivityDetail = () => {
                     <Card.Body>
                         <Card.Title>{activity.title}</Card.Title>
                         {loader && <Spinner animation="border" />}
+                        <ListGroup>
+                            {tasks && tasks.length > 0 ? (
+                                tasks.map((task) => (
+                                    <ListGroup.Item key={task.id}>
+                                        {task.name}
+                                    </ListGroup.Item>
+                                ))
+                            ) : (
+                                <ListGroup.Item>
+                                    No tasks to display
+                                </ListGroup.Item>
+                            )}
+                        </ListGroup>
                     </Card.Body>
                 </Card>
             )}

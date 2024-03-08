@@ -57,7 +57,11 @@ const ActivityDetail = () => {
                         <ListGroup>
                             {tasks && tasks.length > 0 ? (
                                 tasks.map((task) => (
-                                    <ListGroup.Item key={task.id}>
+                                    <ListGroup.Item
+                                        key={task.id}
+                                        action
+                                        href={`/task/${task.id}`}
+                                    >
                                         {task.name}
                                     </ListGroup.Item>
                                 ))

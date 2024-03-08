@@ -32,7 +32,7 @@ const TaskDetail = () => {
 
     return (
         <Container>
-            Activity Detail Page
+            Task Detail Page
             {task && (
                 <Card style={{ width: "18rem" }}>
                     <Card.Body>

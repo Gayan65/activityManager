@@ -2,28 +2,30 @@ import db from "../db/db.js";
 
 //GET ALL TASKS - SQL
 export const getAllTasks = async () => {
-    const res = await db.query("SELECT * FROM task");
-    return res;
+  const res = await db.query(
+    "SELECT task.id, task.name, task.content, task.startdate, task.enddate, status.title AS status, activity.title FROM task LEFT JOIN status ON task.status = status.id LEFT JOIN activity ON task.activityid = activity.id"
+  );
+  return res;
 };
 
 //GET ALL ACTIVE TASKS - SQL
 export const getAllActiveTasks = async () => {
-    const res = await db.query(
-        "SELECT * FROM task WHERE task.status = 1 OR task.status = 2;"
-    );
-    return res;
+  const res = await db.query(
+    "SELECT * FROM task WHERE task.status = 1 OR task.status = 2;"
+  );
+  return res;
 };
 
 //GET A TASK FROM TASK_ID - SQL
 export const getTaskFromId = async (taskId) => {
-    const res = await db.query(`SELECT * FROM task WHERE task.id = ${taskId}`);
-    return res;
+  const res = await db.query(`SELECT * FROM task WHERE task.id = ${taskId}`);
+  return res;
 };
 
 //GET A TASK FROM TASK_ID - SQL
 export const getTaskFromActivityId = async (activityId) => {
-    const res = await db.query(
-        `SELECT * FROM task WHERE activityid = ${activityId}`
-    );
-    return res;
+  const res = await db.query(
+    `SELECT * FROM task WHERE activityid = ${activityId}`
+  );
+  return res;
 };

@@ -8,20 +8,12 @@ Manages day-today activities plus performance dashborad-university project
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-- [Project Structure](#project-structure)
-- [Usage](#usage)
-- [Features](#features)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
 This application enable user to crud activities, tasks, manage them, use performance section to enhance the capacity as well as organize tasks. 
 
 ## Technologies
-
-[List the technologies used in your project, both frontend and backend.]
 
 - Frontend: [React, Typescript]
 - Backend: [Node, Express]
@@ -31,15 +23,12 @@ This application enable user to crud activities, tasks, manage them, use perform
 
 ### Prerequisites
 
-[Specify any prerequisites or dependencies that users need to install before running your project.]
-
 - Node.js
 - npm
 - Postgres Sql
 
 ### Installation
 
-[Provide step-by-step instructions on how to set up and run your project locally.]
 Befor installing all the dependencies, make an env file in the backend root directory add all variables for
 - PORT
 - DB_HOST

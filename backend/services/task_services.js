@@ -11,7 +11,7 @@ export const getAllTasks = async () => {
 //GET ALL ACTIVE TASKS - SQL
 export const getAllActiveTasks = async () => {
   const res = await db.query(
-    "SELECT * FROM task WHERE task.status = 1 OR task.status = 2;"
+    "SELECT task.id, task.name, task.content, task.startdate, task.enddate, status.title AS status, activity.title,  ARRAY_AGG(tag.name) AS tagnames FROM task LEFT JOIN status ON task.status = status.id LEFT JOIN activity ON task.activityid = activity.id LEFT JOIN tagtask ON task.id = tagtask.taskid LEFT JOIN tag ON tagtask.tagid = tag.id WHERE task.status = 1 OR task.status = 2 GROUP BY task.id, status.title, activity.title"
   );
   return res;
 };

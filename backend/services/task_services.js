@@ -3,7 +3,7 @@ import db from "../db/db.js";
 //GET ALL TASKS - SQL
 export const getAllTasks = async () => {
   const res = await db.query(
-    "SELECT task.id, task.name, task.content, task.startdate, task.enddate, status.title AS status, activity.title FROM task LEFT JOIN status ON task.status = status.id LEFT JOIN activity ON task.activityid = activity.id"
+    "SELECT task.id, task.name, task.content, task.startdate, task.enddate, status.title AS status, activity.title,  ARRAY_AGG(tag.name) AS tagnames FROM task LEFT JOIN status ON task.status = status.id LEFT JOIN activity ON task.activityid = activity.id LEFT JOIN tagtask ON task.id = tagtask.taskid LEFT JOIN tag ON tagtask.tagid = tag.id GROUP BY task.id, status.title, activity.title"
   );
   return res;
 };

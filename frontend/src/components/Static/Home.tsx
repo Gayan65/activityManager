@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Container, Nav, Spinner, ListGroup, Card } from "react-bootstrap";
+import { Container, Spinner, ListGroup, Card } from "react-bootstrap";
 
 const Home = () => {
     //DEFINE THE TASK OBJ

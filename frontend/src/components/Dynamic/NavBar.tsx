@@ -5,9 +5,8 @@ const NavBar = () => {
     return (
         <Navbar bg="dark" data-bs-theme="dark">
             <Container>
-                <Navbar.Brand href="#home">Activity_Manager</Navbar.Brand>
+                <Navbar.Brand href="/">Activity_Manager</Navbar.Brand>
                 <Nav className="me-auto">
-                    <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/tasks">Manage Tasks</Nav.Link>
                     <Nav.Link href="/activities">Manage Activities</Nav.Link>
                     <Nav.Link href="/performance">Performance</Nav.Link>

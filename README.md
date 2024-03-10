@@ -44,7 +44,7 @@ https://github.com/Gayan65/activityManager.git
 # Navigate to the project directory
 cd activityManager
 
-# Install dependencies
+# Install dependencies in both backend and frontend
 npm install
 
 # Start the development server

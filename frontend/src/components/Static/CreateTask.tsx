@@ -10,6 +10,9 @@ const CreateTask = () => {
     enddate: "",
     activityid: "",
     status: 1,
+    tags: "",
+
+    //NOTE! - tags are being handled by separate special API it add all the task details as well as tags info simultaneously!
   };
 
   //FORM DATA SET TO THE STATE
@@ -114,6 +117,19 @@ const CreateTask = () => {
               </Form.Control>
             </Form.Group>
             {/* TASK ACTIVITY CHOICE END */}
+            {/* TAG START */}
+            <Form.Group className="mb-3" controlId="formBasicContent">
+              <Form.Label>Tags</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={2}
+                placeholder="Tags"
+                name="tags"
+                onChange={onChange}
+                value={formData.tags}
+              />
+            </Form.Group>
+            {/* TAG END */}
             <Button variant="primary" type="submit">
               Submit
             </Button>

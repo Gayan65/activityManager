@@ -11,6 +11,7 @@ const NavBar = () => {
                     <Nav.Link href="/activities">Manage Activities</Nav.Link>
                     <Nav.Link href="/performance">Performance</Nav.Link>
                     <Nav.Link href="/notifications">Notifications</Nav.Link>
+                    <Nav.Link href="/create/task">+</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>

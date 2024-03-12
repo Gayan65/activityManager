@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Container, Form, Button, Card } from "react-bootstrap";
+import { Container, Form, Button, Card, Alert } from "react-bootstrap";
 
 const CreateTask = () => {
   //DECLARE ACTIVITY TYPE
@@ -24,6 +24,7 @@ const CreateTask = () => {
   //FORM DATA SET TO THE STATE
   const [formData, setFormData] = useState(defaultFormData); // FORM DATA
   const [activityData, setActivityData] = useState<Activity[] | null>(null); // ACTIVITY DATA
+  const [errorMessage, setErrorMessage] = useState("");
 
   //HANDLE INPUT CHANGE
   const onChange = (
@@ -40,6 +41,12 @@ const CreateTask = () => {
   //HANDLE FORM SUBMIT
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Check if activityid is selected
+    if (!formData.activityid) {
+      setErrorMessage("Please select an activity");
+      return;
+    }
     console.log(formData);
 
     setFormData(defaultFormData);
@@ -129,12 +136,15 @@ const CreateTask = () => {
                 onChange={onChange}
                 required
               >
+                <option>No Activity selected</option>
                 {activityData ? (
                   activityData.map((activity) => (
-                    <option key={activity.id}>{activity.title}</option>
+                    <option key={activity.id} value={activity.id}>
+                      {activity.title}
+                    </option>
                   ))
                 ) : (
-                  <option>Loading</option>
+                  <option>No active Activities</option>
                 )}
               </Form.Control>
             </Form.Group>
@@ -155,6 +165,11 @@ const CreateTask = () => {
             <Button variant="primary" type="submit">
               Submit
             </Button>
+            {errorMessage && (
+              <Alert className="mt-3" variant="danger">
+                {errorMessage}
+              </Alert>
+            )}
           </Form>
         </Card.Body>
       </Card>

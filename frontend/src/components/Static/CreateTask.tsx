@@ -47,6 +47,11 @@ const CreateTask = () => {
       setErrorMessage("Please select an activity");
       return;
     }
+    //ADD A HANDLER FOR CHECK START DATE NO CHECK YET
+    if (formData.startdate > formData.enddate) {
+      setErrorMessage("Please check the start date");
+      return;
+    }
     console.log(formData);
 
     setFormData(defaultFormData);

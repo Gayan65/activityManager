@@ -141,7 +141,7 @@ const CreateTask = () => {
                 onChange={onChange}
                 required
               >
-                <option>No Activity selected</option>
+                <option value={""}>No Activity selected</option>
                 {activityData ? (
                   activityData.map((activity) => (
                     <option key={activity.id} value={activity.id}>

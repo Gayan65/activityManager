@@ -53,8 +53,14 @@ const CreateTask = () => {
       return;
     }
     console.log(formData);
+    setErrorMessage("Data Add successfully");
 
     setFormData(defaultFormData);
+
+    //THE ERROR MESSAGE WILL BE GONE IN 3S
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 3000);
   };
 
   //GET API DATA ONCE LOAD THE PAGE
@@ -66,7 +72,7 @@ const CreateTask = () => {
         setActivityData(response.data.activities as Activity[]);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [errorMessage]);
 
   return (
     <Container className="mt-5">
@@ -171,7 +177,14 @@ const CreateTask = () => {
               Submit
             </Button>
             {errorMessage && (
-              <Alert className="mt-3" variant="danger">
+              <Alert
+                className="mt-3"
+                variant={
+                  errorMessage === "Data Add successfully"
+                    ? "success"
+                    : "danger"
+                }
+              >
                 {errorMessage}
               </Alert>
             )}

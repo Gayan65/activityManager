@@ -10,6 +10,8 @@ import {
   createTask,
 } from "../services/task_services.js";
 
+import { addTag, relationalTblUpdate } from "../services/tag_services.js";
+
 const taskRouter = express.Router();
 taskRouter.use(bodyParser.urlencoded({ extended: false }));
 
@@ -81,10 +83,11 @@ taskRouter.get("/activity/:id", async (req, res) => {
   }
 });
 
-//API ADD NEW TASK
+//API ADD NEW TASK (still multiple tags can not be added.....)
 taskRouter.post("/create", async (req, res) => {
   const { name, content, startdate, enddate, activityid, status, tags } =
     req.body;
+  //CREATING TASK
   const task = await createTask(
     name,
     content,
@@ -94,8 +97,30 @@ taskRouter.post("/create", async (req, res) => {
     status,
     tags
   );
-  //TODO - FUNCTION FOR ADDING CHECK FOR TAGS AND ADD
-  console.log(task);
+
+  const createdTask = task.rows[0];
+  // CREATING TAG
+  const tag = await addTag(tags);
+
+  const createdTag = tag.rows[0];
+
+  // CREATING RELATIONAL DB
+  const relationalUpdate = await relationalTblUpdate(
+    createdTask.id,
+    createdTag.id
+  );
+
+  if (relationalUpdate.rowCount > 0) {
+    res.status(200).json({
+      success: true,
+      message: "task add successfully!",
+    });
+  } else {
+    res.status(200).json({
+      success: false,
+      message: "tasks cannot be added",
+    });
+  }
 });
 
 export default taskRouter;

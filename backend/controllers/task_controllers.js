@@ -94,6 +94,7 @@ taskRouter.post("/create", async (req, res) => {
     status,
     tags
   );
+  //TODO - FUNCTION FOR ADDING CHECK FOR TAGS AND ADD
   console.log(task);
 });
 

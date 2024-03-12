@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 
 const CreateTask = () => {
+  //DECLARE ACTIVITY TYPE
+  type Activity = {
+    id: number;
+    title: string;
+  };
   //FORM DATA ONCE PAGE LOAD (only for task and NO TAGS INVOLVED!)
   const defaultFormData = {
     name: "",
@@ -16,7 +22,8 @@ const CreateTask = () => {
   };
 
   //FORM DATA SET TO THE STATE
-  const [formData, setFormData] = useState(defaultFormData);
+  const [formData, setFormData] = useState(defaultFormData); // FORM DATA
+  const [activityData, setActivityData] = useState<Activity[] | null>(null); // ACTIVITY DATA
 
   //HANDLE INPUT CHANGE
   const onChange = (
@@ -37,6 +44,17 @@ const CreateTask = () => {
 
     setFormData(defaultFormData);
   };
+
+  //GET API DATA ONCE LOAD THE PAGE
+  useEffect(() => {
+    //GET CURRENT ACTIVITIES FOR FETCHING THE DROPDOWN UNDER ACTIVITIES IN THE FORM
+    axios
+      .get("http://localhost:4000/activity/current/all")
+      .then((response) => {
+        setActivityData(response.data.activities as Activity[]);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <Container className="mt-5">
@@ -111,9 +129,13 @@ const CreateTask = () => {
                 onChange={onChange}
                 required
               >
-                <option>Option 1</option>
-                <option>Option 2</option>
-                <option>Option 3</option>
+                {activityData ? (
+                  activityData.map((activity) => (
+                    <option key={activity.id}>{activity.title}</option>
+                  ))
+                ) : (
+                  <option>Loading</option>
+                )}
               </Form.Control>
             </Form.Group>
             {/* TASK ACTIVITY CHOICE END */}

@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  Container,
-  Spinner,
-  Card,
-  Accordion,
-  Form,
-  Button,
-} from "react-bootstrap";
+import { Container, Spinner, Card } from "react-bootstrap";
 import DeleteTask from "./DeleteTask";
 
 const TaskDetail = () => {

@@ -89,7 +89,7 @@ const CreateTask = () => {
       <Card style={{ width: "35rem" }}>
         <Card.Body>
           <Card.Title>Task Create </Card.Title>
-          <Form method="POST" onSubmit={(e) => onSubmit(e)}>
+          <Form method="POST" onSubmit={onSubmit}>
             {/* TASK NAME START */}
             <Form.Group className="mb-3" controlId="formBasicName">
               <Form.Label>Name</Form.Label>

@@ -140,8 +140,13 @@ taskRouter.post("/create", async (req, res) => {
 
 //API DELETE TASK
 taskRouter.delete("/delete/:id", (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   console.log(id);
+  /*
+delete the relational table ids
+delete all the tags relates to that task id
+delete task
+  */
   res.status(200).json({
     success: true,
     message: "Delete API",

@@ -96,7 +96,7 @@ taskRouter.post("/create", async (req, res) => {
     return "#" + tag.trim();
   });
 
-  //CREATING TASK
+  //API CREATING TASK
   const task = await createTask(
     name,
     content,
@@ -135,6 +135,16 @@ taskRouter.post("/create", async (req, res) => {
   res.status(200).json({
     success: true,
     message: "Task added successfully!",
+  });
+});
+
+//API DELETE TASK
+taskRouter.delete("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  res.status(200).json({
+    success: true,
+    message: "Delete API",
   });
 });
 

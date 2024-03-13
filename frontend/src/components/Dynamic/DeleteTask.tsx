@@ -1,5 +1,5 @@
+import axios from "axios";
 import React, { useState } from "react";
-import qs from "qs";
 import { Card, Accordion, Form, Button, Alert } from "react-bootstrap";
 
 // Define the prop types for the component
@@ -43,10 +43,13 @@ const DeleteTask: React.FC<DeleteTaskProps> = ({ id, name }) => {
       return;
     }
 
-    //Making a query string with task id
-    const data = qs.stringify(id);
-
     //Calling axios to send the data to api
+    axios
+      .delete(`http://localhost:4000/task/delete/${id}`)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => console.log(err));
 
     setFormData(defaultFormData);
 

@@ -37,8 +37,7 @@ export const createTask = async (
   startdate,
   enddate,
   activityid,
-  status,
-  tags
+  status
 ) => {
   const res = await db.query(
     "INSERT INTO Task (Name, Content, StartDate, EndDate, Status, ActivityId) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",

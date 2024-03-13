@@ -87,6 +87,15 @@ taskRouter.get("/activity/:id", async (req, res) => {
 taskRouter.post("/create", async (req, res) => {
   const { name, content, startdate, enddate, activityid, status, tags } =
     req.body;
+
+  // Using split() with a comma as the delimiter and added to an array
+  const tagsArray = tags.split(",");
+
+  // Adding '#' in front of each word using map() and this returns array with #
+  const hashtagArray = tagsArray.map(function (tag) {
+    return "#" + tag.trim();
+  });
+
   //CREATING TASK
   const task = await createTask(
     name,
@@ -94,33 +103,36 @@ taskRouter.post("/create", async (req, res) => {
     startdate,
     enddate,
     activityid,
-    status,
-    tags
+    status
   );
 
   const createdTask = task.rows[0];
-  // CREATING TAG
-  const tag = await addTag(tags);
 
-  const createdTag = tag.rows[0];
+  //SEND ALL ACCORDINGLY VIA LOOP TO THE DB
+  for (const tagText of hashtagArray) {
+    // CREATING TAG
+    const tag = await addTag(tagText);
+    const createdTag = tag.rows[0];
 
-  // CREATING RELATIONAL DB
-  const relationalUpdate = await relationalTblUpdate(
-    createdTask.id,
-    createdTag.id
-  );
+    // CREATING RELATIONAL DB
+    const relationalUpdate = await relationalTblUpdate(
+      createdTask.id,
+      createdTag.id
+    );
 
-  if (relationalUpdate.rowCount > 0) {
-    res.status(200).json({
-      success: true,
-      message: "task add successfully!",
-    });
-  } else {
-    res.status(200).json({
-      success: false,
-      message: "tasks cannot be added",
-    });
+    if (relationalUpdate.rowCount === 0) {
+      res.status(500).json({
+        success: false,
+        message: "Error updating relational table",
+      });
+      return;
+    }
   }
+
+  res.status(200).json({
+    success: true,
+    message: "Task added successfully!",
+  });
 });
 
 export default taskRouter;

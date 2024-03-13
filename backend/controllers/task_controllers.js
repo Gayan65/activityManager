@@ -108,24 +108,27 @@ taskRouter.post("/create", async (req, res) => {
 
   const createdTask = task.rows[0];
 
-  //SEND ALL ACCORDINGLY VIA LOOP TO THE DB
-  for (const tagText of hashtagArray) {
-    // CREATING TAG
-    const tag = await addTag(tagText);
-    const createdTag = tag.rows[0];
+  //IF TAGS AVAILABLE ONLY THE BELOW MENTION LOOP WORKS..
+  if (tags) {
+    //SEND ALL ACCORDINGLY VIA LOOP TO THE DB
+    for (const tagText of hashtagArray) {
+      // CREATING TAG
+      const tag = await addTag(tagText);
+      const createdTag = tag.rows[0];
 
-    // CREATING RELATIONAL DB
-    const relationalUpdate = await relationalTblUpdate(
-      createdTask.id,
-      createdTag.id
-    );
+      // CREATING RELATIONAL DB
+      const relationalUpdate = await relationalTblUpdate(
+        createdTask.id,
+        createdTag.id
+      );
 
-    if (relationalUpdate.rowCount === 0) {
-      res.status(500).json({
-        success: false,
-        message: "Error updating relational table",
-      });
-      return;
+      if (relationalUpdate.rowCount === 0) {
+        res.status(500).json({
+          success: false,
+          message: "Error updating relational table",
+        });
+        return;
+      }
     }
   }
 

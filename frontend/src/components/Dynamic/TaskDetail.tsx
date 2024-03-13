@@ -42,7 +42,8 @@ const TaskDetail = () => {
           </Card.Body>
         </Card>
       )}
-      {task && <DeleteTask />}
+      {/* PASSING PROPS TO THE DELETE COMPONENT*/}
+      {task && <DeleteTask id={task.id} title={task.name} />}
     </Container>
   );
 };

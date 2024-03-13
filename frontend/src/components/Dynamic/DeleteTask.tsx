@@ -1,7 +1,13 @@
 import React from "react";
 import { Card, Accordion, Form, Button } from "react-bootstrap";
 
-const DeleteTask = () => {
+// Define the prop types for the component
+interface DeleteTaskProps {
+  id: number;
+  title: string;
+}
+
+const DeleteTask: React.FC<DeleteTaskProps> = ({ id, title }) => {
   return (
     <div>
       {/* DELETE TASK VIEW START*/}
@@ -11,8 +17,8 @@ const DeleteTask = () => {
             <Accordion.Item eventKey="0">
               <Accordion.Header>Delete Task</Accordion.Header>
               <Accordion.Body>
-                Danger Zone: this section can be performed a delete activity of
-                a task.
+                Danger Zone: Please type the task tile as "{title}" to delete
+                this task.
                 <Form>
                   <Form.Group className="mb-3" controlId="formBasicTaskTile">
                     <Form.Control

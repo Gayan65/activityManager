@@ -16,3 +16,19 @@ export const relationalTblUpdate = async (taskid, tagid) => {
   );
   return res;
 };
+
+//DELETE tagtask RELATIONAL DATA ROWS - SQL
+export const deleteTagTaskRows = async (taskid) => {
+  const res = await db.query(
+    `DELETE FROM tagtask WHERE taskid = ${taskid} RETURNING *`
+  );
+  return res;
+};
+
+//DELETE tags DATA ROWS - SQL
+export const deleteTagRows = async (tagid) => {
+  const res = await db.query(
+    `DELETE FROM tag WHERE tag.id = ${tagid} RETURNING *`
+  );
+  return res;
+};

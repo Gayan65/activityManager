@@ -45,3 +45,11 @@ export const createTask = async (
   );
   return res;
 };
+
+//DELETE A TASK - SQL (ONLY TASK NO TAGS ADDED HERE..)
+export const deleteTask = async (taskid) => {
+  const res = await db.query(
+    `DELETE FROM task WHERE task.id = ${taskid} RETURNING *`
+  );
+  return res;
+};

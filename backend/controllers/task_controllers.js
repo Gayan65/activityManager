@@ -8,9 +8,15 @@ import {
   getTaskFromId,
   getTaskFromActivityId,
   createTask,
+  deleteTask,
 } from "../services/task_services.js";
 
-import { addTag, relationalTblUpdate } from "../services/tag_services.js";
+import {
+  addTag,
+  deleteTagRows,
+  deleteTagTaskRows,
+  relationalTblUpdate,
+} from "../services/tag_services.js";
 
 const taskRouter = express.Router();
 taskRouter.use(bodyParser.urlencoded({ extended: false }));
@@ -139,18 +145,42 @@ taskRouter.post("/create", async (req, res) => {
 });
 
 //API DELETE TASK
-taskRouter.delete("/delete/:id", (req, res) => {
+taskRouter.delete("/delete/:id", async (req, res) => {
   const { id } = req.params;
-  console.log(id);
-  /*
-delete the relational table ids
-delete all the tags relates to that task id
-delete task
-  */
-  res.status(200).json({
-    success: true,
-    message: "Delete API",
-  });
+
+  //delete the relational table ids
+  const deleteRelationalTagTask = await deleteTagTaskRows(id);
+  if (deleteRelationalTagTask.rows.length > 0) {
+    const deletedTagIds = deleteRelationalTagTask.rows;
+
+    //SEND ALL TAG IDS TO DELETE VIA LOOP TO THE DB
+    for (const tagDelete of deletedTagIds) {
+      // DELETING TAG
+      const tag = await deleteTagRows(tagDelete.tagid);
+      const deletedTag = tag.rows[0];
+
+      if (deletedTag.rowCount === 0) {
+        res.status(500).json({
+          success: false,
+          message: "Error deleting tags in tag table",
+        });
+        return;
+      }
+    }
+  }
+  //delete task
+  const removedTask = await deleteTask(id);
+  if (removedTask.rows.length > 0) {
+    res.status(200).json({
+      success: true,
+      message: "Delete task successfully!",
+    });
+  } else {
+    res.status(200).json({
+      success: false,
+      message: "Delete task unsuccessful!",
+    });
+  }
 });
 
 export default taskRouter;

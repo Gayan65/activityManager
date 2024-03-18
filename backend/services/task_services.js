@@ -53,3 +53,11 @@ export const deleteTask = async (taskid) => {
   );
   return res;
 };
+
+//CANCEL STATUS FOR A TASK - SQL (ONLY TASK NO TAGS ADDED HERE..)
+export const cancelTask = async (taskid) => {
+  const res = await db.query(
+    `UPDATE task SET status = 4 WHERE task.id = ${taskid} RETURNING *`
+  );
+  return res;
+};

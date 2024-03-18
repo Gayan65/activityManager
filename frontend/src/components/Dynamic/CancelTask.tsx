@@ -12,7 +12,6 @@ interface CancelTaskProps {
 const CancelTask: React.FC<CancelTaskProps> = ({ id, status }) => {
   //FORM DATA ONCE PAGE LOAD
   const defaultFormData = {
-    id: id,
     status: status,
   };
 
@@ -25,8 +24,8 @@ const CancelTask: React.FC<CancelTaskProps> = ({ id, status }) => {
 
     //Making a query string
     const data = qs.stringify(formData);
-    //Calling axios to send the data to api
 
+    //Calling axios to send the data to api
     axios
       .patch(`http://localhost:4000/task/cancelUpdate/${id}`, data)
       .then((response) => {

@@ -9,6 +9,7 @@ import {
   getTaskFromActivityId,
   createTask,
   deleteTask,
+  cancelTask,
 } from "../services/task_services.js";
 
 import {
@@ -179,6 +180,39 @@ taskRouter.delete("/delete/:id", async (req, res) => {
     res.status(200).json({
       success: false,
       message: "Delete task unsuccessful!",
+    });
+  }
+});
+
+//API UPDATE CANCEL STATUS FOR A NEW/ WORK IN PROCESS TASK FROM A TASK ID (tasks detail page)
+taskRouter.patch("/cancelUpdate/:id", async (req, res) => {
+  try {
+    const { status } = req.body;
+    const taskId = req.params.id;
+    if (status == 1 || status == 2) {
+      const updateCancelTask = await cancelTask(taskId);
+      if (updateCancelTask.rowCount > 0) {
+        res.status(200).json({
+          success: true,
+          message: "task classified as cancel successfully!",
+          updatedtask: updateCancelTask.rows,
+        });
+      } else {
+        res.status(200).json({
+          success: false,
+          message: "task can not be classified as cancel",
+        });
+      }
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "Request can not be made!",
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
     });
   }
 });

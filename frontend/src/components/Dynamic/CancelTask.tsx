@@ -1,16 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
+import qs from "qs";
 import { Card, Accordion, Form, Button, Alert } from "react-bootstrap";
 
 // Define the prop types for the component
 interface CancelTaskProps {
   id: number;
+  status: number;
 }
 
-const CancelTask: React.FC<CancelTaskProps> = ({ id }) => {
+const CancelTask: React.FC<CancelTaskProps> = ({ id, status }) => {
   //FORM DATA ONCE PAGE LOAD
   const defaultFormData = {
-    status: null,
+    id: id,
+    status: status,
   };
 
   //-------------FORM DATA SET TO THE STATE-----------------
@@ -19,16 +22,18 @@ const CancelTask: React.FC<CancelTaskProps> = ({ id }) => {
   //--------------HANDLE FORM SUBMIT-------------------
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(id);
+
+    //Making a query string
+    const data = qs.stringify(formData);
     //Calling axios to send the data to api
-    /*
+
     axios
-      .delete(`http://localhost:4000/task/cancelUpdate/${id}`)
+      .patch(`http://localhost:4000/task/cancelUpdate/${id}`, data)
       .then((response) => {
         console.log(response.data);
       })
       .catch((err) => console.log(err));
-*/
+
     setFormData(defaultFormData);
   };
   return (
@@ -36,7 +41,7 @@ const CancelTask: React.FC<CancelTaskProps> = ({ id }) => {
       {/* DELETE TASK VIEW START*/}
       <Card style={{ width: "18rem" }} className="mt-5">
         <Card.Body>
-          <Form method="PUT" onSubmit={onSubmit}>
+          <Form method="PATCH" onSubmit={onSubmit}>
             <Button variant="warning" type="submit">
               Cancel
             </Button>

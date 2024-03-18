@@ -47,7 +47,7 @@ const TaskDetail = () => {
       {/* PASSING PROPS TO THE DELETE COMPONENT*/}
       {task && <DeleteTask id={task.id} name={task.name} />}
       {/* PASSING PROPS TO THE CANCEL TASK COMPONENT*/}
-      {task && <CancelTask id={task.id} />}
+      {task && <CancelTask id={task.id} status={task.status} />}
     </Container>
   );
 };

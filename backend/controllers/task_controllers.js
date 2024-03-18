@@ -63,7 +63,7 @@ taskRouter.get("/:id", async (req, res) => {
     res.status(200).json({
       success: true,
       message: "task found successfully!",
-      activity: task.rows,
+      task: task.rows,
     });
   } else {
     res.status(200).json({
@@ -194,7 +194,7 @@ taskRouter.patch("/cancelUpdate/:id", async (req, res) => {
       if (updateCancelTask.rowCount > 0) {
         res.status(200).json({
           success: true,
-          message: "task classified as cancel successfully!",
+          message: "The task classified as canceled",
           updatedtask: updateCancelTask.rows,
         });
       } else {

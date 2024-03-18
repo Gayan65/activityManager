@@ -27,7 +27,7 @@ const TaskDetail = () => {
     axios
       .get(`http://localhost:4000/task/${params.id}`)
       .then((response) => {
-        setTask(response.data.activity[0] as Task);
+        setTask(response.data.task[0] as Task);
         setLoader(false);
       })
       .catch((err) => navigate("/error"));

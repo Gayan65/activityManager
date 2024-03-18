@@ -3,12 +3,14 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Spinner, Card } from "react-bootstrap";
 import DeleteTask from "./DeleteTask";
+import CancelTask from "./CancelTask";
 
 const TaskDetail = () => {
   //DEFINE THE TASK OBJ
   interface Task {
     id: number;
     name: string;
+    status: number;
   }
 
   //USE PARAMS TO FETCH THE ID FOR AXIOS CALL
@@ -44,6 +46,8 @@ const TaskDetail = () => {
       )}
       {/* PASSING PROPS TO THE DELETE COMPONENT*/}
       {task && <DeleteTask id={task.id} name={task.name} />}
+      {/* PASSING PROPS TO THE CANCEL TASK COMPONENT*/}
+      {task && <CancelTask id={task.id} />}
     </Container>
   );
 };

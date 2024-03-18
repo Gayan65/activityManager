@@ -41,7 +41,11 @@ const CancelTask: React.FC<CancelTaskProps> = ({ id, status }) => {
       <Card style={{ width: "18rem" }} className="mt-5">
         <Card.Body>
           <Form method="PATCH" onSubmit={onSubmit}>
-            <Button variant="warning" type="submit">
+            <Button
+              variant="warning"
+              type="submit"
+              disabled={status === 3 || status === 4 ? true : false}
+            >
               Cancel
             </Button>
           </Form>

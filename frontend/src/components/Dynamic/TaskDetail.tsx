@@ -50,7 +50,9 @@ const TaskDetail = () => {
       {/* PASSING PROPS TO THE CANCEL TASK COMPONENT*/}
       {task && <CancelTask id={task.id} status={task.status} />}
       {/* EDIT TASK COMPONENT VISIBILITY LOGIC*/}
-      {task && (task.status === 1 || task.status === 2) && <EditNavigator />}
+      {task && (task.status === 1 || task.status === 2) && (
+        <EditNavigator id={task.id} />
+      )}
     </Container>
   );
 };

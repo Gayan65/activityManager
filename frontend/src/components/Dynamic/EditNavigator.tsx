@@ -1,10 +1,24 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-const EditNavigator = () => {
+// Define the prop types for the component
+interface EditTaskProps {
+  id: number;
+}
+
+const EditNavigator: React.FC<EditTaskProps> = ({ id }) => {
+  const navigate = useNavigate();
+
+  //HANDLE ONCLICK EVENT
+  const handleClick = () => {
+    navigate(`/updateTask/${id}`);
+  };
   return (
     <div className="mt-5">
-      <Button variant="success">Edit</Button>
+      <Button variant="success" onClick={handleClick}>
+        Edit
+      </Button>
     </div>
   );
 };

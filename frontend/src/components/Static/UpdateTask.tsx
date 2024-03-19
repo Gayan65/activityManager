@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Container, Form, Button } from "react-bootstrap";
+import { useParams, useNavigate } from "react-router-dom";
+import { Container, Form, Button, Card } from "react-bootstrap";
 
 const UpdateTask = () => {
+  //USE NAVIGATE TO DIRECT TO THE ERROR PAGE
+  const navigate = useNavigate();
   //USE PARAMS TO FETCH THE ID FOR AXIOS CALL
   const params = useParams();
 
@@ -48,7 +50,7 @@ const UpdateTask = () => {
         });
         console.log(taskData);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => navigate("/error"));
 
     //GET ACTIVITY DETAIL FROM THE API
     axios
@@ -57,114 +59,121 @@ const UpdateTask = () => {
         setActivityData(response.data.activities as Activity[]);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [navigate, params.id]);
 
   return (
     <Container>
-      {formData && (
-        <Form method="POST">
-          {/* TASK NAME START */}
-          <Form.Group className="mb-3" controlId="formBasicName">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Name"
-              name="name"
-              onChange={onChange}
-              value={formData.name}
-              required
-            />
-          </Form.Group>
-          {/* TASK NAME END */}
+      <Card style={{ width: "35rem" }}>
+        <Card.Body>
+          <Card.Title>Update Task</Card.Title>
+          <Container>
+            {formData && (
+              <Form method="POST">
+                {/* TASK NAME START */}
+                <Form.Group className="mb-3" controlId="formBasicName">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Name"
+                    name="name"
+                    onChange={onChange}
+                    value={formData.name}
+                    required
+                  />
+                </Form.Group>
+                {/* TASK NAME END */}
 
-          {/* TASK CONTENT START */}
-          <Form.Group className="mb-3" controlId="formBasicContent">
-            <Form.Label>Content</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={5}
-              placeholder="Content"
-              name="content"
-              onChange={onChange}
-              value={formData.content}
-              required
-            />
-          </Form.Group>
-          {/* TASK CONTENT END */}
+                {/* TASK CONTENT START */}
+                <Form.Group className="mb-3" controlId="formBasicContent">
+                  <Form.Label>Content</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={5}
+                    placeholder="Content"
+                    name="content"
+                    onChange={onChange}
+                    value={formData.content}
+                    required
+                  />
+                </Form.Group>
+                {/* TASK CONTENT END */}
 
-          {/* TASK STAR DATE START */}
-          <Form.Group className="mb-3" controlId="formBasicDate">
-            <Form.Label>Start Date</Form.Label>
-            <Form.Control
-              type="date"
-              placeholder="Start Date"
-              name="startdate"
-              onChange={onChange}
-              value={formData.startdate}
-              required
-            />
-          </Form.Group>
-          {/* TASK START DATE END */}
+                {/* TASK STAR DATE START */}
+                <Form.Group className="mb-3" controlId="formBasicDate">
+                  <Form.Label>Start Date</Form.Label>
+                  <Form.Control
+                    type="date"
+                    placeholder="Start Date"
+                    name="startdate"
+                    onChange={onChange}
+                    value={formData.startdate}
+                    required
+                  />
+                </Form.Group>
+                {/* TASK START DATE END */}
 
-          {/* TASK END DATE START */}
-          <Form.Group className="mb-3" controlId="formBasicDate">
-            <Form.Label>End Date</Form.Label>
-            <Form.Control
-              type="date"
-              placeholder="End Date"
-              value={formData.enddate}
-              name="enddate"
-              onChange={onChange}
-              required
-            />
-          </Form.Group>
-          {/* TASK END DATE END */}
+                {/* TASK END DATE START */}
+                <Form.Group className="mb-3" controlId="formBasicDate">
+                  <Form.Label>End Date</Form.Label>
+                  <Form.Control
+                    type="date"
+                    placeholder="End Date"
+                    value={formData.enddate}
+                    name="enddate"
+                    onChange={onChange}
+                    required
+                  />
+                </Form.Group>
+                {/* TASK END DATE END */}
 
-          {/* TASK ACTIVITY CHOICE START */}
-          <Form.Group className="mb-3" controlId="formBasicSelect">
-            <Form.Label>Select your Activity</Form.Label>
-            <Form.Control
-              as="select"
-              name="activityid"
-              value={formData.activityid}
-              onChange={onChange}
-              required
-            >
-              <option value={""}>No Activity selected</option>
-              {activityData ? (
-                activityData.map((activity) => (
-                  <option key={activity.id} value={activity.id}>
-                    {activity.title}
-                  </option>
-                ))
-              ) : (
-                <option>No active Activities</option>
-              )}
-            </Form.Control>
-          </Form.Group>
-          {/* TASK ACTIVITY CHOICE END */}
-          {/* TAG START */}
-          <Form.Group className="mb-3" controlId="formBasicContent">
-            <Form.Label>Tags</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={2}
-              placeholder="Tags"
-              name="tags"
-              onChange={onChange}
-              value={
-                Array.isArray(formData.tagnames)
-                  ? formData.tagnames.join(", ").replace(/#/g, "")
-                  : formData.tagnames
-              }
-            />
-          </Form.Group>
-          {/* TAG END */}
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
-      )}
+                {/* TASK ACTIVITY CHOICE START */}
+                <Form.Group className="mb-3" controlId="formBasicSelect">
+                  <Form.Label>Select your Activity</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="activityid"
+                    value={formData.activityid}
+                    onChange={onChange}
+                    required
+                  >
+                    <option value={""}>No Activity selected</option>
+                    {activityData ? (
+                      activityData.map((activity) => (
+                        <option key={activity.id} value={activity.id}>
+                          {activity.title}
+                        </option>
+                      ))
+                    ) : (
+                      <option>No active Activities</option>
+                    )}
+                  </Form.Control>
+                </Form.Group>
+                {/* TASK ACTIVITY CHOICE END */}
+                {/* TAG START */}
+                <Form.Group className="mb-3" controlId="formBasicContent">
+                  <Form.Label>Tags</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={2}
+                    placeholder="Tags"
+                    name="tags"
+                    onChange={onChange}
+                    value={
+                      Array.isArray(formData.tagnames)
+                        ? formData.tagnames.join(", ").replace(/#/g, "")
+                        : formData.tagnames
+                    }
+                  />
+                </Form.Group>
+                {/* TAG END */}
+                <Button variant="primary" type="submit">
+                  Save
+                </Button>
+              </Form>
+            )}
+          </Container>
+        </Card.Body>
+      </Card>
     </Container>
   );
 };

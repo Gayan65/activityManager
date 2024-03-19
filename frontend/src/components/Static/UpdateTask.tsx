@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import qs from "qs";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Form, Button, Card } from "react-bootstrap";
+import { Container, Form, Button, Card, Alert } from "react-bootstrap";
 
 const UpdateTask = () => {
   //USE NAVIGATE TO DIRECT TO THE ERROR PAGE
@@ -16,8 +17,8 @@ const UpdateTask = () => {
     startdate: "",
     enddate: "",
     activityid: "",
-    status: 1,
-    tagnames: "",
+    status: "",
+    tags: "",
   };
 
   //DECLARE ACTIVITY TYPE
@@ -32,12 +33,54 @@ const UpdateTask = () => {
     title: string;
   };
 
-  const onChange = () => {};
-
   //-------------FORM DATA SET TO THE STATE-----------------
   const [formData, setFormData] = useState(defaultFormData); // FORM DATA
   const [activityData, setActivityData] = useState<Activity[] | null>(null); // ACTIVITY DATA
   const [statusData, setStatusData] = useState<Status[] | null>(null); // ACTIVITY DATA
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const onChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    setFormData((prevSate) => ({
+      ...prevSate,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Check if activityid is selected
+    if (!formData.activityid) {
+      setErrorMessage("Please select an activity");
+      return;
+    }
+    //ADD A HANDLER FOR CHECK START DATE NO CHECK YET
+    if (formData.startdate > formData.enddate) {
+      setErrorMessage("Please check the start date");
+      return;
+    }
+
+    //Making a query string
+    const data = qs.stringify(formData);
+    console.log(data);
+    //Calling axios to send the data to api
+    axios
+      .patch(`http://localhost:4000/task/update/${params.id}`, data)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => console.log(err));
+
+    setErrorMessage("Data Updated successfully");
+
+    //THE ERROR MESSAGE WILL BE GONE IN 3S
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 3000);
+  };
 
   useEffect(() => {
     //GET TASK DETAIL FROM THE API
@@ -84,7 +127,7 @@ const UpdateTask = () => {
           <Card.Title>Update Task</Card.Title>
           <Container>
             {formData && (
-              <Form method="POST">
+              <Form method="PATCH" onSubmit={onSubmit}>
                 {/* TASK NAME START */}
                 <Form.Group className="mb-3" controlId="formBasicName">
                   <Form.Label>Name</Form.Label>
@@ -199,9 +242,9 @@ const UpdateTask = () => {
                     name="tags"
                     onChange={onChange}
                     value={
-                      Array.isArray(formData.tagnames)
-                        ? formData.tagnames.join(", ").replace(/#/g, "")
-                        : formData.tagnames
+                      Array.isArray(formData.tags)
+                        ? formData.tags.join(", ").replace(/#/g, "")
+                        : formData.tags
                     }
                   />
                 </Form.Group>
@@ -209,6 +252,18 @@ const UpdateTask = () => {
                 <Button variant="primary" type="submit">
                   Save
                 </Button>
+                {errorMessage && (
+                  <Alert
+                    className="mt-3"
+                    variant={
+                      errorMessage === "Data Updated successfully"
+                        ? "success"
+                        : "danger"
+                    }
+                  >
+                    {errorMessage}
+                  </Alert>
+                )}
               </Form>
             )}
           </Container>

@@ -10,13 +10,16 @@ import {
   createTask,
   deleteTask,
   cancelTask,
+  updateTask,
 } from "../services/task_services.js";
 
 import {
   addTag,
   deleteTagRows,
   deleteTagTaskRows,
+  relationalTagUpdate,
   relationalTblUpdate,
+  updateTag,
 } from "../services/tag_services.js";
 
 const taskRouter = express.Router();
@@ -215,6 +218,82 @@ taskRouter.patch("/cancelUpdate/:id", async (req, res) => {
       message: error.message,
     });
   }
+});
+
+//API UPDATE TASK
+taskRouter.patch("/update/:id", async (req, res) => {
+  const taskId = req.params.id;
+  const { name, content, startdate, enddate, activityid, status, tags } =
+    req.body;
+
+  // UPDATING TASK
+  const task = await updateTask(
+    taskId,
+    name,
+    content,
+    startdate,
+    enddate,
+    activityid,
+    status
+  );
+
+  const updatedTask = task.rows[0];
+
+  //IF TAGS AVAILABLE ONLY THE BELOW MENTION LOOP WORKS..
+  if (tags) {
+    //Deleting all tags belong to this task id
+    //delete the relational table ids
+    const deleteRelationalTagTask = await deleteTagTaskRows(taskId);
+    if (deleteRelationalTagTask.rows.length > 0) {
+      const deletedTagIds = deleteRelationalTagTask.rows;
+
+      //SEND ALL TAG IDS TO DELETE VIA LOOP TO THE DB
+      for (const tagDelete of deletedTagIds) {
+        // DELETING TAG
+        const tag = await deleteTagRows(tagDelete.tagid);
+        const deletedTag = tag.rows[0];
+
+        if (deletedTag.rowCount === 0) {
+          res.status(500).json({
+            success: false,
+            message: "Error deleting tags in tag table",
+          });
+          return;
+        }
+      }
+    }
+
+    // Using split() with a comma as the delimiter and added to an array
+    const tagsArray = tags.split(",");
+
+    // Adding '#' in front of each word using map() and this returns array with #
+    const hashtagArray = tagsArray.map(function (tag) {
+      return "#" + tag.trim();
+    });
+
+    //SEND ALL ACCORDINGLY VIA LOOP TO THE DB
+    for (const tagText of hashtagArray) {
+      // CREATING TAG
+      const tag = await addTag(tagText);
+      const createdTag = tag.rows[0];
+
+      // CREATING RELATIONAL DB
+      const relationalUpdate = await relationalTblUpdate(taskId, createdTag.id);
+
+      if (relationalUpdate.rowCount === 0) {
+        res.status(500).json({
+          success: false,
+          message: "Error updating relational table",
+        });
+        return;
+      }
+    }
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Task added successfully!",
+  });
 });
 
 export default taskRouter;

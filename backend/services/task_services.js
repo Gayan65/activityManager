@@ -19,7 +19,7 @@ export const getAllActiveTasks = async () => {
 //GET A TASK FROM TASK_ID - SQL
 export const getTaskFromId = async (taskId) => {
   const res = await db.query(
-    `SELECT task.id AS id, task.name AS name, task.content AS content, task.startdate AS startdate, task.enddate AS enddate, status.id AS status, activity.id AS activityid, ARRAY_AGG(tag.name) AS tagnames FROM task LEFT JOIN status ON task.status = status.id LEFT JOIN activity ON task.activityid = activity.id LEFT JOIN tagtask ON task.id = tagtask.taskid LEFT JOIN tag ON tagtask.tagid = tag.id WHERE task.id = ${taskId} GROUP BY task.id, task.name, task.content, task.startdate, task.enddate, status.id, activity.id`
+    `SELECT task.id AS id, task.name AS name, task.content AS content, task.startdate AS startdate, task.enddate AS enddate, status.id AS status, activity.id AS activityid, ARRAY_AGG(tag.name) AS tags FROM task LEFT JOIN status ON task.status = status.id LEFT JOIN activity ON task.activityid = activity.id LEFT JOIN tagtask ON task.id = tagtask.taskid LEFT JOIN tag ON tagtask.tagid = tag.id WHERE task.id = ${taskId} GROUP BY task.id, task.name, task.content, task.startdate, task.enddate, status.id, activity.id`
   );
   return res;
 };
@@ -60,6 +60,23 @@ export const deleteTask = async (taskid) => {
 export const cancelTask = async (taskid) => {
   const res = await db.query(
     `UPDATE task SET status = 4 WHERE task.id = ${taskid} RETURNING *`
+  );
+  return res;
+};
+
+//UPDATE A TASK - SQL (ONLY TASK NO TAGS ADDED HERE..)
+export const updateTask = async (
+  taskId,
+  name,
+  content,
+  startdate,
+  enddate,
+  activityid,
+  status
+) => {
+  const res = await db.query(
+    `UPDATE Task SET Name = $1, Content =$2, StartDate =$3, EndDate = $4, ActivityId = $5, Status = $6 WHERE task.id = ${taskId} RETURNING *`,
+    [name, content, startdate, enddate, activityid, status]
   );
   return res;
 };

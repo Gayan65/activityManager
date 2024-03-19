@@ -32,3 +32,18 @@ export const deleteTagRows = async (tagid) => {
   );
   return res;
 };
+
+//UPDATE a TAG - SQL
+export const updateTag = async (tag) => {
+  const res = await db.query("UPDATE tag SET Name = $1 RETURNING *", [tag]);
+  return res;
+};
+
+//UPDATE TASK TAG TO RELATIONAL TABLES - SQL
+export const relationalTagUpdate = async (taskid, tagid) => {
+  const res = await db.query(
+    `UPDATE tagtask SET tagid = $1 WHERE tagtask.taskid = ${taskid}`,
+    [tagid]
+  );
+  return res;
+};

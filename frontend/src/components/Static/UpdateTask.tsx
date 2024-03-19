@@ -15,7 +15,7 @@ const UpdateTask = () => {
     enddate: "",
     activityid: "",
     status: 1,
-    tags: "",
+    tagnames: "",
   };
 
   //DECLARE ACTIVITY TYPE
@@ -152,7 +152,11 @@ const UpdateTask = () => {
               placeholder="Tags"
               name="tags"
               onChange={onChange}
-              value={formData.tags}
+              value={
+                Array.isArray(formData.tagnames)
+                  ? formData.tagnames.join(", ").replace(/#/g, "")
+                  : formData.tagnames
+              }
             />
           </Form.Group>
           {/* TAG END */}

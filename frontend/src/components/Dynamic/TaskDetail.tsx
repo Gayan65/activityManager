@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Container, Spinner, Card } from "react-bootstrap";
 import DeleteTask from "./DeleteTask";
 import CancelTask from "./CancelTask";
+import EditNavigator from "./EditNavigator";
 
 const TaskDetail = () => {
   //DEFINE THE TASK OBJ
@@ -48,6 +49,8 @@ const TaskDetail = () => {
       {task && <DeleteTask id={task.id} name={task.name} />}
       {/* PASSING PROPS TO THE CANCEL TASK COMPONENT*/}
       {task && <CancelTask id={task.id} status={task.status} />}
+      {/* EDIT TASK COMPONENT VISIBILITY LOGIC*/}
+      {task && (task.status === 1 || task.status === 2) && <EditNavigator />}
     </Container>
   );
 };

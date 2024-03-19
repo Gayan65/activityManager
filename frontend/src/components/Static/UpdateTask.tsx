@@ -26,11 +26,19 @@ const UpdateTask = () => {
     title: string;
   };
 
+  //DECLARE STATUS TYPE
+  type Status = {
+    id: number;
+    title: string;
+  };
+
   const onChange = () => {};
 
   //-------------FORM DATA SET TO THE STATE-----------------
   const [formData, setFormData] = useState(defaultFormData); // FORM DATA
   const [activityData, setActivityData] = useState<Activity[] | null>(null); // ACTIVITY DATA
+  const [statusData, setStatusData] = useState<Status[] | null>(null); // ACTIVITY DATA
+
   useEffect(() => {
     //GET TASK DETAIL FROM THE API
     axios
@@ -57,6 +65,14 @@ const UpdateTask = () => {
       .get("http://localhost:4000/activity/all")
       .then((response) => {
         setActivityData(response.data.activities as Activity[]);
+      })
+      .catch((err) => console.log(err));
+
+    //GET STATUS DETAIL FROM THE API
+    axios
+      .get("http://localhost:4000/status/active")
+      .then((response) => {
+        setStatusData(response.data.status as Status[]);
       })
       .catch((err) => console.log(err));
   }, [navigate, params.id]);
@@ -149,6 +165,30 @@ const UpdateTask = () => {
                   </Form.Control>
                 </Form.Group>
                 {/* TASK ACTIVITY CHOICE END */}
+
+                {/* STATUS CHOICE START */}
+                <Form.Group className="mb-3" controlId="formBasicSelect">
+                  <Form.Label>Status of your task</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="status"
+                    value={formData.status}
+                    onChange={onChange}
+                    required
+                  >
+                    {statusData ? (
+                      statusData.map((status) => (
+                        <option key={status.id} value={status.id}>
+                          {status.title}
+                        </option>
+                      ))
+                    ) : (
+                      <option>No Status found</option>
+                    )}
+                  </Form.Control>
+                </Form.Group>
+                {/* STATUS CHOICE END */}
+
                 {/* TAG START */}
                 <Form.Group className="mb-3" controlId="formBasicContent">
                   <Form.Label>Tags</Form.Label>

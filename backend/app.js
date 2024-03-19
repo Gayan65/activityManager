@@ -4,6 +4,7 @@ import cors from "cors";
 import db from "./db/db.js";
 import taskRouter from "./controllers/task_controllers.js";
 import activityRouter from "./controllers/activity_controllers.js";
+import statusRouter from "./controllers/status_controllers.js";
 
 const app = express();
 
@@ -14,11 +15,12 @@ const port = process.env.PORT;
 app.use(cors());
 app.use("/task", taskRouter);
 app.use("/activity", activityRouter);
+app.use("/status", statusRouter);
 
 //BACKEND SEVER AND DATABASE CONNECTION
 await db.connect().then(() => {
-    console.log("DB connected successfully !....");
-    app.listen(port, () => {
-        console.log(`Server is running port number ${port}`);
-    });
+  console.log("DB connected successfully !....");
+  app.listen(port, () => {
+    console.log(`Server is running port number ${port}`);
+  });
 });

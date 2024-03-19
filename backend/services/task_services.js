@@ -18,11 +18,13 @@ export const getAllActiveTasks = async () => {
 
 //GET A TASK FROM TASK_ID - SQL
 export const getTaskFromId = async (taskId) => {
-  const res = await db.query(`SELECT * FROM task WHERE task.id = ${taskId}`);
+  const res = await db.query(
+    `SELECT task.id AS id, task.name AS name, task.content AS content, task.startdate AS startdate, task.enddate AS enddate, status.id AS status, activity.id AS activityid, ARRAY_AGG(tag.name) AS tagnames FROM task LEFT JOIN status ON task.status = status.id LEFT JOIN activity ON task.activityid = activity.id LEFT JOIN tagtask ON task.id = tagtask.taskid LEFT JOIN tag ON tagtask.tagid = tag.id WHERE task.id = ${taskId} GROUP BY task.id, task.name, task.content, task.startdate, task.enddate, status.id, activity.id`
+  );
   return res;
 };
 
-//GET A TASK FROM TASK_ID - SQL
+//GET A TASK FROM ACTIVITY_ID - SQL
 export const getTaskFromActivityId = async (activityId) => {
   const res = await db.query(
     `SELECT * FROM task WHERE activityid = ${activityId}`

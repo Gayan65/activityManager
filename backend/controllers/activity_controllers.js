@@ -3,10 +3,15 @@ import bodyParser from "body-parser";
 
 //IMPORT ALL THE FUNCTIONS FROM SERVICES
 import {
+  createActivity,
   getActivityFromId,
   getAllActivities,
   getAllCurrentActivities,
 } from "../services/activity_services.js";
+import {
+  addTag,
+  relationalTblUpdateActivity,
+} from "../services/tag_services.js";
 
 const activityRouter = express.Router();
 activityRouter.use(bodyParser.urlencoded({ extended: false }));
@@ -75,18 +80,6 @@ activityRouter.post("/create", async (req, res) => {
     tags,
   } = req.body;
 
-  console.log(
-    title,
-    description,
-    url,
-    startdate,
-    enddate,
-    status,
-    activitytype,
-    tags
-  );
-
-  /*
   // Using split() with a comma as the delimiter and added to an array
   const tagsArray = tags.split(",");
 
@@ -96,16 +89,17 @@ activityRouter.post("/create", async (req, res) => {
   });
 
   //API CREATING TASK
-  const task = await createTask(
-    name,
-    content,
+  const activity = await createActivity(
+    title,
+    description,
+    url,
     startdate,
     enddate,
-    activityid,
-    status
+    status,
+    activitytype
   );
 
-  const createdTask = task.rows[0];
+  const createdActivity = activity.rows[0];
 
   //IF TAGS AVAILABLE ONLY THE BELOW MENTION LOOP WORKS..
   if (tags) {
@@ -116,8 +110,8 @@ activityRouter.post("/create", async (req, res) => {
       const createdTag = tag.rows[0];
 
       // CREATING RELATIONAL DB
-      const relationalUpdate = await relationalTblUpdate(
-        createdTask.id,
+      const relationalUpdate = await relationalTblUpdateActivity(
+        createdActivity.id,
         createdTag.id
       );
 
@@ -133,9 +127,8 @@ activityRouter.post("/create", async (req, res) => {
 
   res.status(200).json({
     success: true,
-    message: "Task added successfully!",
+    message: "Activity added successfully!",
   });
-  */
 });
 
 export default activityRouter;

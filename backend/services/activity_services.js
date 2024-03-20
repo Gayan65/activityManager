@@ -23,3 +23,20 @@ export const getActivityFromId = async (activityId) => {
   );
   return res;
 };
+
+//CREATE AN ACTIVITY - SQL (ONLY TASK NO TAGS ADDED HERE..)
+export const createActivity = async (
+  title,
+  description,
+  url,
+  startdate,
+  enddate,
+  status,
+  activitytype
+) => {
+  const res = await db.query(
+    "INSERT INTO Activity (title, description, url, startdate, enddate, status, activitytype) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+    [title, description, url, startdate, enddate, status, activitytype]
+  );
+  return res;
+};

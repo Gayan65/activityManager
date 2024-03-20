@@ -47,3 +47,12 @@ export const relationalTagUpdate = async (taskid, tagid) => {
   );
   return res;
 };
+
+//ADD TASK TAG TO RELATIONAL TABLES - SQL
+export const relationalTblUpdateActivity = async (activityid, tagid) => {
+  const res = await db.query(
+    "INSERT INTO tagactivity (activityid, tagid) VALUES ($1, $2)",
+    [activityid, tagid]
+  );
+  return res;
+};

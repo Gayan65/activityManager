@@ -67,7 +67,7 @@ activityRouter.get("/:id", async (req, res) => {
   }
 });
 
-//API ADD NEW ACTIVITY (still multiple tags can not be added.....)
+//API ADD NEW ACTIVITY
 activityRouter.post("/create", async (req, res) => {
   const {
     title,

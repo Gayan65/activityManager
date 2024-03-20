@@ -60,6 +60,66 @@ activityRouter.get("/:id", async (req, res) => {
   }
 });
 
-//NEW API HERE
+//API ADD NEW ACTIVITY (still multiple tags can not be added.....)
+activityRouter.post("/create", async (req, res) => {
+  const {
+    title,
+    description,
+    startdate,
+    enddate,
+    activitytypeid,
+    status,
+    tags,
+  } = req.body;
+
+  // Using split() with a comma as the delimiter and added to an array
+  const tagsArray = tags.split(",");
+
+  // Adding '#' in front of each word using map() and this returns array with #
+  const hashtagArray = tagsArray.map(function (tag) {
+    return "#" + tag.trim();
+  });
+
+  //API CREATING TASK
+  const task = await createTask(
+    name,
+    content,
+    startdate,
+    enddate,
+    activityid,
+    status
+  );
+
+  const createdTask = task.rows[0];
+
+  //IF TAGS AVAILABLE ONLY THE BELOW MENTION LOOP WORKS..
+  if (tags) {
+    //SEND ALL ACCORDINGLY VIA LOOP TO THE DB
+    for (const tagText of hashtagArray) {
+      // CREATING TAG
+      const tag = await addTag(tagText);
+      const createdTag = tag.rows[0];
+
+      // CREATING RELATIONAL DB
+      const relationalUpdate = await relationalTblUpdate(
+        createdTask.id,
+        createdTag.id
+      );
+
+      if (relationalUpdate.rowCount === 0) {
+        res.status(500).json({
+          success: false,
+          message: "Error updating relational table",
+        });
+        return;
+      }
+    }
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Task added successfully!",
+  });
+});
 
 export default activityRouter;

@@ -58,7 +58,7 @@ const CreateActivity = () => {
 
     //Making a query string
     const data = qs.stringify(formData);
-
+    console.log(formData);
     //Calling axios to send the data to api
     axios
       .post("http://localhost:4000/activity/create", data)
@@ -94,7 +94,7 @@ const CreateActivity = () => {
         <Card.Body>
           <Card.Title>Activity Create </Card.Title>
           <Form method="POST" onSubmit={onSubmit}>
-            {/* TASK NAME START */}
+            {/* ACTIVITY NAME START */}
             <Form.Group className="mb-3" controlId="formBasicName">
               <Form.Label>Title</Form.Label>
               <Form.Control
@@ -106,9 +106,22 @@ const CreateActivity = () => {
                 required
               />
             </Form.Group>
-            {/* TASK NAME END */}
+            {/* ACTIVITY NAME END */}
 
-            {/* TASK CONTENT START */}
+            {/* URL START */}
+            <Form.Group className="mb-3" controlId="formBasicName">
+              <Form.Label>URL</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="URL"
+                name="url"
+                onChange={onChange}
+                value={formData.url}
+              />
+            </Form.Group>
+            {/* URL END */}
+
+            {/* ACTIVITY DESCRIPTION START */}
             <Form.Group className="mb-3" controlId="formBasicContent">
               <Form.Label>Description</Form.Label>
               <Form.Control
@@ -121,9 +134,9 @@ const CreateActivity = () => {
                 required
               />
             </Form.Group>
-            {/* TASK CONTENT END */}
+            {/* ACTIVITY DESCRIPTION END */}
 
-            {/* TASK STAR DATE START */}
+            {/* ACTIVITY STAR DATE START */}
             <Form.Group className="mb-3" controlId="formBasicDate">
               <Form.Label>Start Date</Form.Label>
               <Form.Control
@@ -135,9 +148,9 @@ const CreateActivity = () => {
                 required
               />
             </Form.Group>
-            {/* TASK START DATE END */}
+            {/* ACTIVITY START DATE END */}
 
-            {/* TASK END DATE START */}
+            {/* ACTIVITY END DATE START */}
             <Form.Group className="mb-3" controlId="formBasicDate">
               <Form.Label>End Date</Form.Label>
               <Form.Control
@@ -149,9 +162,9 @@ const CreateActivity = () => {
                 required
               />
             </Form.Group>
-            {/* TASK END DATE END */}
+            {/* ACTIVITY END DATE END */}
 
-            {/* TASK ACTIVITY CHOICE START */}
+            {/* ACTIVITY TYPE CHOICE START */}
             <Form.Group className="mb-3" controlId="formBasicSelect">
               <Form.Label>Select your Activity</Form.Label>
               <Form.Control
@@ -173,7 +186,7 @@ const CreateActivity = () => {
                 )}
               </Form.Control>
             </Form.Group>
-            {/* TASK ACTIVITY CHOICE END */}
+            {/* ACTIVITY TYPE CHOICE END */}
             {/* TAG START */}
             <Form.Group className="mb-3" controlId="formBasicContent">
               <Form.Label>Tags</Form.Label>

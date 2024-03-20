@@ -5,6 +5,7 @@ import db from "./db/db.js";
 import taskRouter from "./controllers/task_controllers.js";
 import activityRouter from "./controllers/activity_controllers.js";
 import statusRouter from "./controllers/status_controllers.js";
+import activityTypeRouter from "./controllers/activity_type_controllers.js";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use("/task", taskRouter);
 app.use("/activity", activityRouter);
 app.use("/status", statusRouter);
+app.use("/activitytype", activityTypeRouter);
 
 //BACKEND SEVER AND DATABASE CONNECTION
 await db.connect().then(() => {

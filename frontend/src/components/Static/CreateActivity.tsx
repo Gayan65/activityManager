@@ -81,9 +81,9 @@ const CreateActivity = () => {
   useEffect(() => {
     //GET CURRENT ACTIVITIES FOR FETCHING THE DROPDOWN UNDER ACTIVITIES IN THE FORM
     axios
-      .get("http://localhost:4000/activity/type/all")
+      .get("http://localhost:4000/activitytype/all")
       .then((response) => {
-        setActivityTypeData(response.data.activitytypes as ActivityType[]);
+        setActivityTypeData(response.data.activityTypes as ActivityType[]);
       })
       .catch((err) => console.log(err));
   }, [errorMessage]);
@@ -99,8 +99,8 @@ const CreateActivity = () => {
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Name"
-                name="name"
+                placeholder="Title"
+                name="title"
                 onChange={onChange}
                 value={formData.title}
                 required
@@ -114,8 +114,8 @@ const CreateActivity = () => {
               <Form.Control
                 as="textarea"
                 rows={5}
-                placeholder="Content"
-                name="content"
+                placeholder="Description"
+                name="description"
                 onChange={onChange}
                 value={formData.description}
                 required
@@ -156,7 +156,7 @@ const CreateActivity = () => {
               <Form.Label>Select your Activity</Form.Label>
               <Form.Control
                 as="select"
-                name="activityid"
+                name="activitytype"
                 value={formData.activitytype}
                 onChange={onChange}
                 required

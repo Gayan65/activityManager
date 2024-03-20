@@ -48,6 +48,7 @@ const DeleteActivity: React.FC<DeleteActivityProps> = ({ id, title }) => {
       .delete(`http://localhost:4000/activity/delete/${id}`)
       .then((response) => {
         console.log(response.data);
+        setErrorMessage(response.data.message);
       })
       .catch((err) => console.log(err));
 
@@ -85,7 +86,17 @@ const DeleteActivity: React.FC<DeleteActivityProps> = ({ id, title }) => {
                     Delete
                   </Button>
                 </Form>
-                {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+                {errorMessage && (
+                  <Alert
+                    variant={
+                      errorMessage === "Delete Activity successfully!"
+                        ? "success"
+                        : "danger"
+                    }
+                  >
+                    {errorMessage}
+                  </Alert>
+                )}
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

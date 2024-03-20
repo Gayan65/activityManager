@@ -158,15 +158,13 @@ const CreateTask = () => {
                 required
               >
                 <option value={""}>No Activity selected</option>
-                {activityData ? (
-                  activityData.map((activity) => (
-                    <option key={activity.id} value={activity.id}>
-                      {activity.title}
-                    </option>
-                  ))
-                ) : (
-                  <option>No active Activities</option>
-                )}
+                {activityData
+                  ? activityData.map((activity) => (
+                      <option key={activity.id} value={activity.id}>
+                        {activity.title}
+                      </option>
+                    ))
+                  : null}
               </Form.Control>
             </Form.Group>
             {/* TASK ACTIVITY CHOICE END */}

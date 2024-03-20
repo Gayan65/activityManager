@@ -40,3 +40,11 @@ export const createActivity = async (
   );
   return res;
 };
+
+//DELETE AN ACTIVITY - SQL (ONLY ACTIVITY NO TAGS ADDED HERE..)
+export const deleteActivity = async (activityId) => {
+  const res = await db.query(
+    `DELETE FROM activity WHERE activity.id = ${activityId} RETURNING *`
+  );
+  return res;
+};

@@ -5,12 +5,15 @@ import axios from "axios";
 //IMPORT ALL THE FUNCTIONS FROM SERVICES
 import {
   createActivity,
+  deleteActivity,
   getActivityFromId,
   getAllActivities,
   getAllCurrentActivities,
 } from "../services/activity_services.js";
 import {
   addTag,
+  deleteTagActivityRows,
+  deleteTagRows,
   relationalTblUpdateActivity,
 } from "../services/tag_services.js";
 
@@ -143,30 +146,100 @@ try {
     const data = allTasks.rows;
 
     if (allTasks.rowCount > 0) {
-      // Check if all statuses are either 1 or 2
-      const allStatusesOneOrTwo = data.every(
-        (item) => item.status === 1 || item.status === 2
-      );
+      // Check if any status is below 3
+      const anyStatusBelow3 = data.some((item) => item.status < 3);
 
-      if (allStatusesOneOrTwo) {
+      if (anyStatusBelow3) {
         res.status(200).json({
           success: false,
           message: "Can not perform the delete, check your tasks' status",
         });
       } else {
-        console.log("Not all statuses are either 1 or 2.");
-
         for (const tasksToBeDeleted of data) {
           await axios
             .delete(`http://localhost:4000/task/delete/${tasksToBeDeleted.id}`)
             .then((response) => {
-              console.log(response.data);
+              //console.log(response.data);
             })
             .catch((err) => console.log(err));
         }
+
+        //performs the delete tags
+        //delete the relational table ids
+        const deleteRelationalTagActivity = await deleteTagActivityRows(
+          activityId
+        );
+        if (deleteRelationalTagActivity.rows.length > 0) {
+          const deletedTagIds = deleteRelationalTagActivity.rows;
+
+          //SEND ALL TAG IDS TO DELETE VIA LOOP TO THE DB
+          for (const tagDelete of deletedTagIds) {
+            // DELETING TAG
+            const tag = await deleteTagRows(tagDelete.tagid);
+            const deletedTag = tag.rows[0];
+
+            if (deletedTag.rowCount === 0) {
+              res.status(500).json({
+                success: false,
+                message: "Error deleting tags in tag table",
+              });
+              return;
+            }
+          }
+
+          //delete task
+          const removedActivity = await deleteActivity(activityId);
+          if (removedActivity.rows.length > 0) {
+            res.status(200).json({
+              success: true,
+              message: "Delete Activity successfully!",
+            });
+          } else {
+            res.status(200).json({
+              success: false,
+              message: "Delete Activity unsuccessful!",
+            });
+          }
+        }
       }
     } else {
-      console.log("perform the activity delition");
+      //performs the delete tags
+      //delete the relational table ids
+      const deleteRelationalTagActivity = await deleteTagActivityRows(
+        activityId
+      );
+      if (deleteRelationalTagActivity.rows.length > 0) {
+        const deletedTagIds = deleteRelationalTagActivity.rows;
+
+        //SEND ALL TAG IDS TO DELETE VIA LOOP TO THE DB
+        for (const tagDelete of deletedTagIds) {
+          // DELETING TAG
+          const tag = await deleteTagRows(tagDelete.tagid);
+          const deletedTag = tag.rows[0];
+
+          if (deletedTag.rowCount === 0) {
+            res.status(500).json({
+              success: false,
+              message: "Error deleting tags in tag table",
+            });
+            return;
+          }
+        }
+      }
+
+      //delete activity
+      const removedActivity = await deleteActivity(activityId);
+      if (removedActivity.rows.length > 0) {
+        res.status(200).json({
+          success: true,
+          message: "Delete Activity successfully!",
+        });
+      } else {
+        res.status(200).json({
+          success: false,
+          message: "Delete Activity unsuccessful!",
+        });
+      }
     }
   });
 } catch (error) {

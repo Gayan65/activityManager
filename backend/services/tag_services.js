@@ -56,3 +56,11 @@ export const relationalTblUpdateActivity = async (activityid, tagid) => {
   );
   return res;
 };
+
+//DELETE tagactivity RELATIONAL DATA ROWS - SQL
+export const deleteTagActivityRows = async (activityid) => {
+  const res = await db.query(
+    `DELETE FROM tagactivity WHERE activityid = ${activityid} RETURNING *`
+  );
+  return res;
+};

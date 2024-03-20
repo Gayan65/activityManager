@@ -1,4 +1,5 @@
 import express from "express";
+import bodyParser from "body-parser";
 
 //IMPORT ALL THE FUNCTIONS FROM SERVICES
 import {
@@ -8,6 +9,7 @@ import {
 } from "../services/activity_services.js";
 
 const activityRouter = express.Router();
+activityRouter.use(bodyParser.urlencoded({ extended: false }));
 
 //API GET ALL ACTIVITIES (Manage all activities page)
 activityRouter.get("/all", async (req, res) => {
@@ -65,13 +67,26 @@ activityRouter.post("/create", async (req, res) => {
   const {
     title,
     description,
+    url,
     startdate,
     enddate,
-    activitytypeid,
     status,
+    activitytype,
     tags,
   } = req.body;
 
+  console.log(
+    title,
+    description,
+    url,
+    startdate,
+    enddate,
+    status,
+    activitytype,
+    tags
+  );
+
+  /*
   // Using split() with a comma as the delimiter and added to an array
   const tagsArray = tags.split(",");
 
@@ -120,6 +135,7 @@ activityRouter.post("/create", async (req, res) => {
     success: true,
     message: "Task added successfully!",
   });
+  */
 });
 
 export default activityRouter;

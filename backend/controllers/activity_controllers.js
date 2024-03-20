@@ -1,5 +1,6 @@
-import express from "express";
+import express, { response } from "express";
 import bodyParser from "body-parser";
+import axios from "axios";
 
 //IMPORT ALL THE FUNCTIONS FROM SERVICES
 import {
@@ -12,6 +13,8 @@ import {
   addTag,
   relationalTblUpdateActivity,
 } from "../services/tag_services.js";
+
+import { getTaskFromActivityId } from "../services/task_services.js";
 
 const activityRouter = express.Router();
 activityRouter.use(bodyParser.urlencoded({ extended: false }));
@@ -130,5 +133,44 @@ activityRouter.post("/create", async (req, res) => {
     message: "Activity added successfully!",
   });
 });
+
+//API DELETE ACTIVITY
+try {
+  activityRouter.delete("/delete/:id", async (req, res) => {
+    const activityId = req.params.id;
+    //get all tasks according to the given activityId
+    const allTasks = await getTaskFromActivityId(activityId);
+    const data = allTasks.rows;
+
+    if (allTasks.rowCount > 0) {
+      // Check if all statuses are either 1 or 2
+      const allStatusesOneOrTwo = data.every(
+        (item) => item.status === 1 || item.status === 2
+      );
+
+      if (allStatusesOneOrTwo) {
+        res.status(200).json({
+          success: false,
+          message: "Can not perform the delete, check your tasks' status",
+        });
+      } else {
+        console.log("Not all statuses are either 1 or 2.");
+
+        for (const tasksToBeDeleted of data) {
+          await axios
+            .delete(`http://localhost:4000/task/delete/${tasksToBeDeleted.id}`)
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((err) => console.log(err));
+        }
+      }
+    } else {
+      console.log("perform the activity delition");
+    }
+  });
+} catch (error) {
+  console.log(err);
+}
 
 export default activityRouter;

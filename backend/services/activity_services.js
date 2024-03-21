@@ -19,7 +19,7 @@ export const getAllCurrentActivities = async () => {
 //GET AN ACTIVITY FROM THE ACTIVITY_ID - SQL
 export const getActivityFromId = async (activityId) => {
   const res = await db.query(
-    `SELECT * FROM activity WHERE activity.id = ${activityId}`
+    `SELECT activity.id AS id, activity.title AS title, activity.description AS description, activity.url AS url, activity.startdate AS startdate, activity.enddate AS enddate, status.id AS status, activitytype.id AS activitytype, ARRAY_AGG(tag.name) AS tags FROM activity LEFT JOIN status ON activity.status = status.id LEFT JOIN activitytype ON activity.activitytype = activitytype.id LEFT JOIN tagactivity ON activity.id = tagactivity.activityid LEFT JOIN tag ON tagactivity.tagid = tag.id WHERE activity.id = ${activityId} GROUP BY activity.id, activity.title, activity.description, activity.startdate, activity.enddate, status.id, activitytype.id`
   );
   return res;
 };

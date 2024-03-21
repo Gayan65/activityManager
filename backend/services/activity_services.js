@@ -48,3 +48,11 @@ export const deleteActivity = async (activityId) => {
   );
   return res;
 };
+
+//CANCEL STATUS FOR A ACTIVITY - SQL (ONLY ACTIVITY NO TAGS ADDED HERE..)
+export const cancelActivity = async (activityId) => {
+  const res = await db.query(
+    `UPDATE activity SET status = 4 WHERE activity.id = ${activityId} RETURNING *`
+  );
+  return res;
+};

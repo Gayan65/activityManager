@@ -4,6 +4,7 @@ import axios from "axios";
 
 //IMPORT ALL THE FUNCTIONS FROM SERVICES
 import {
+  cancelActivity,
   createActivity,
   deleteActivity,
   getActivityFromId,
@@ -245,5 +246,69 @@ try {
 } catch (error) {
   console.log(err);
 }
+
+//API UPDATE CANCEL STATUS FOR A NEW/ WORK IN PROCESS ACTIVITY FROM A ACTIVITY ID (activity detail page)
+activityRouter.patch("/cancelUpdate/:id", async (req, res) => {
+  try {
+    const { status } = req.body;
+    const activityId = req.params.id;
+    if (status == 1 || status == 2) {
+      //get all tasks according to the given activityId
+      const allTasks = await getTaskFromActivityId(activityId);
+      const data = allTasks.rows;
+
+      if (allTasks.rowCount > 0) {
+        // Check if any status is below 3 (New, In process)
+        const anyStatusBelow3 = data.some((item) => item.status < 3);
+        if (anyStatusBelow3) {
+          res.status(200).json({
+            success: false,
+            message: "Check your tasks status!",
+          });
+        } else {
+          //PERFORM CANCEL
+          const updateCancelActivity = await cancelActivity(activityId);
+          if (updateCancelActivity.rowCount > 0) {
+            res.status(200).json({
+              success: true,
+              message: "The activity classified as canceled",
+              updatedactivity: updateCancelActivity.rows,
+            });
+          } else {
+            res.status(200).json({
+              success: false,
+              message: "Activity can not be classified as cancel",
+            });
+          }
+        }
+      } else {
+        //PERFORM CANCEL
+        const updateCancelActivity = await cancelActivity(activityId);
+        if (updateCancelActivity.rowCount > 0) {
+          res.status(200).json({
+            success: true,
+            message: "The activity classified as canceled",
+            updatedactivity: updateCancelActivity.rows,
+          });
+        } else {
+          res.status(200).json({
+            success: false,
+            message: "Activity can not be classified as cancel",
+          });
+        }
+      }
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "Request can not be made!",
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
 
 export default activityRouter;

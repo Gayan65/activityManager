@@ -12,6 +12,7 @@ import NavBar from "./components/Dynamic/NavBar";
 import CreateTask from "./components/Static/CreateTask";
 import UpdateTask from "./components/Static/UpdateTask";
 import CreateActivity from "./components/Static/CreateActivity";
+import UpdateActivity from "./components/Static/UpdateActivity";
 
 function App() {
   return (
@@ -29,6 +30,10 @@ function App() {
           <Route path="/create/task" element={<CreateTask />}></Route>
           <Route path="/updateTask/:id" element={<UpdateTask />}></Route>
           <Route path="/create/activity" element={<CreateActivity />}></Route>
+          <Route
+            path="/updateActivity/:id"
+            element={<UpdateActivity />}
+          ></Route>
           <Route path="/error" element={<Error />}></Route>
         </Routes>
       </BrowserRouter>

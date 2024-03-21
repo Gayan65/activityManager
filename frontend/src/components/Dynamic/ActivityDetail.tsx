@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Container, Spinner, Card, ListGroup } from "react-bootstrap";
 import DeleteActivity from "./DeleteActivity";
 import CancelActivity from "./CancelActivity";
+import EditNavigatorActivity from "./EditNavigatorActivity";
 
 const ActivityDetail = () => {
   //DEFINE THE ACTIVITY OBJ
@@ -79,6 +80,9 @@ const ActivityDetail = () => {
       {activity && <DeleteActivity id={activity.id} title={activity.title} />}
       {/* PASSING PROPS TO THE CANCEL COMPONENT*/}
       {activity && <CancelActivity id={activity.id} status={activity.status} />}
+      {activity && (activity.status === 1 || activity.status === 2) && (
+        <EditNavigatorActivity id={activity.id} />
+      )}
     </Container>
   );
 };

@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Spinner, Card, ListGroup } from "react-bootstrap";
 import DeleteActivity from "./DeleteActivity";
+import CancelActivity from "./CancelActivity";
 
 const ActivityDetail = () => {
   //DEFINE THE ACTIVITY OBJ
   interface Activity {
     id: number;
     title: string;
+    status: number;
   }
 
   //DEFINE THE TASK OBJ
@@ -75,6 +77,8 @@ const ActivityDetail = () => {
       )}
       {/* PASSING PROPS TO THE DELETE COMPONENT*/}
       {activity && <DeleteActivity id={activity.id} title={activity.title} />}
+      {/* PASSING PROPS TO THE CANCEL COMPONENT*/}
+      {activity && <CancelActivity id={activity.id} status={activity.status} />}
     </Container>
   );
 };

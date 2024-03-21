@@ -10,6 +10,7 @@ import {
   getActivityFromId,
   getAllActivities,
   getAllCurrentActivities,
+  updateActivity,
 } from "../services/activity_services.js";
 import {
   addTag,
@@ -311,4 +312,91 @@ activityRouter.patch("/cancelUpdate/:id", async (req, res) => {
   }
 });
 
+//API UPDATE ACTIVITY
+activityRouter.patch("/update/:id", async (req, res) => {
+  const activityId = req.params.id;
+  const {
+    title,
+    description,
+    url,
+    startdate,
+    enddate,
+    activitytype,
+    status,
+    tags,
+  } = req.body;
+
+  // UPDATING ACTIVITY
+  const activity = await updateActivity(
+    activityId,
+    title,
+    description,
+    url,
+    startdate,
+    enddate,
+    activitytype,
+    status
+  );
+
+  const updatedActivity = activity.rows[0];
+
+  //IF TAGS AVAILABLE ONLY THE BELOW MENTION LOOP WORKS..
+  if (tags) {
+    //Deleting all tags belong to this activity id
+    //delete the relational table ids
+    const deleteRelationalTagActivity = await deleteTagActivityRows(activityId);
+    if (deleteRelationalTagActivity.rows.length > 0) {
+      const deletedTagIds = deleteRelationalTagActivity.rows;
+
+      //SEND ALL TAG IDS TO DELETE VIA LOOP TO THE DB
+      for (const tagDelete of deletedTagIds) {
+        // DELETING TAG
+        const tag = await deleteTagRows(tagDelete.tagid);
+        const deletedTag = tag.rows[0];
+
+        if (deletedTag.rowCount === 0) {
+          res.status(500).json({
+            success: false,
+            message: "Error deleting tags in tag table",
+          });
+          return;
+        }
+      }
+    }
+
+    // Using split() with a comma as the delimiter and added to an array
+    const tagsArray = tags.split(",");
+
+    // Adding '#' in front of each word using map() and this returns array with #
+    const hashtagArray = tagsArray.map(function (tag) {
+      return "#" + tag.trim();
+    });
+
+    //SEND ALL ACCORDINGLY VIA LOOP TO THE DB
+    for (const tagText of hashtagArray) {
+      // CREATING TAG
+      const tag = await addTag(tagText);
+      const createdTag = tag.rows[0];
+
+      // CREATING RELATIONAL DB
+      const relationalUpdate = await relationalTblUpdateActivity(
+        activityId,
+        createdTag.id
+      );
+
+      if (relationalUpdate.rowCount === 0) {
+        res.status(500).json({
+          success: false,
+          message: "Error updating relational table",
+        });
+        return;
+      }
+    }
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Activity updated successfully!",
+  });
+});
 export default activityRouter;

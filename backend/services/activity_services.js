@@ -56,3 +56,21 @@ export const cancelActivity = async (activityId) => {
   );
   return res;
 };
+
+//UPDATE AN ACTIVITY - SQL (ONLY ACTIVITY NO TAGS ADDED HERE..)
+export const updateActivity = async (
+  activityId,
+  title,
+  description,
+  url,
+  startdate,
+  enddate,
+  activitytype,
+  status
+) => {
+  const res = await db.query(
+    `UPDATE Activity SET Title = $1, Description =$2, url =$3, StartDate =$4, EndDate = $5, Activitytype = $6, Status = $7 WHERE activity.id = ${activityId} RETURNING *`,
+    [title, description, url, startdate, enddate, activitytype, status]
+  );
+  return res;
+};

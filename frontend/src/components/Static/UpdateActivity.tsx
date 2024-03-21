@@ -208,7 +208,7 @@ const UpdateActivity = () => {
                   <Form.Label>Select your Activity Type</Form.Label>
                   <Form.Control
                     as="select"
-                    name="activityid"
+                    name="activitytype"
                     value={formData.activitytype}
                     onChange={onChange}
                     required

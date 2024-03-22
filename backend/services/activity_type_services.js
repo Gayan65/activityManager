@@ -1,4 +1,4 @@
-import db from "../db/db.js";
+import { db } from "../db/db.js";
 
 //GET ALL ACTIVITY TYPES - SQL
 export const getAllActivityTypes = async () => {

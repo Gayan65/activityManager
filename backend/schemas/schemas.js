@@ -75,6 +75,16 @@ async function createSchemaAndTables() {
      );
     `);
 
+    // Create Notification table
+    await db2.query(`
+        CREATE TABLE IF NOT EXISTS Notification (
+          Id SERIAL PRIMARY KEY,
+          Status VARCHAR(255) NOT NULL,
+          TaskId INTEGER REFERENCES Task(Id),
+          ActivityId INTEGER REFERENCES Activity(Id)
+        );
+      `);
+
     // Insert initial data into Status table
     await db2.query(`
     INSERT INTO Status (Title) VALUES

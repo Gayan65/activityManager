@@ -30,12 +30,15 @@ const NotificationDropDown = () => {
   }, []);
   return (
     <div>
-      {notifications &&
+      {notifications ? (
         notifications.map((notification, i) => (
           <Dropdown.Item key={i} href="#/action-1">
-            {notification.name}
+            {notification.name} task has {notification.status}.
           </Dropdown.Item>
-        ))}
+        ))
+      ) : (
+        <Dropdown.Item>No any notifications</Dropdown.Item>
+      )}
     </div>
   );
 };

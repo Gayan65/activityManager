@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
+import NotificationDropDown from "./NotificationDropDown";
 
 const NavBar = () => {
   return (
@@ -16,12 +17,11 @@ const NavBar = () => {
             <Dropdown.Toggle variant="success" id="dropdown-basic">
               Notification
             </Dropdown.Toggle>
-
+            {/* NOTIFICATION DROP DOWN START*/}
             <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+              <NotificationDropDown />
             </Dropdown.Menu>
+            {/* NOTIFICATION DROP DOWN END*/}
           </Dropdown>
         </Nav>
       </Container>

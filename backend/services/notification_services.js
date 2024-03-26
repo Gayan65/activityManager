@@ -11,6 +11,8 @@ export const createTaskNotification = async (taskId, status) => {
 
 //GET  ALL NOTIFICATIONS AN ACTIVITY - SQL
 export const getAllNotifications = async () => {
-  const res = await db.query("SELECT * FROM notification ORDER BY id ASC ");
+  const res = await db.query(
+    "SELECT notification.id, notification.taskid, notification.activityid, notification.status, task.name, activity.title FROM notification LEFT JOIN task ON notification.taskid = task.id LEFT JOIN activity ON notification.activityid = activity.id"
+  );
   return res;
 };

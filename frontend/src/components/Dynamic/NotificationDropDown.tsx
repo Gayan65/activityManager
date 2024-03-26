@@ -9,6 +9,8 @@ const NotificationDropDown = () => {
     taskId: number;
     activityId: number;
     status: string;
+    name: string;
+    title: string;
   }
 
   //SET STATES
@@ -31,7 +33,7 @@ const NotificationDropDown = () => {
       {notifications &&
         notifications.map((notification, i) => (
           <Dropdown.Item key={i} href="#/action-1">
-            {notification.status}
+            {notification.name}
           </Dropdown.Item>
         ))}
     </div>

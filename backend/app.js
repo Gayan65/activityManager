@@ -8,6 +8,7 @@ import taskRouter from "./controllers/task_controllers.js";
 import activityRouter from "./controllers/activity_controllers.js";
 import statusRouter from "./controllers/status_controllers.js";
 import activityTypeRouter from "./controllers/activity_type_controllers.js";
+import notificationRouter from "./controllers/notification_controllers.js";
 import { spawn } from "child_process";
 
 const app = express();
@@ -21,6 +22,7 @@ app.use("/task", taskRouter);
 app.use("/activity", activityRouter);
 app.use("/status", statusRouter);
 app.use("/activitytype", activityTypeRouter);
+app.use("/notification", notificationRouter);
 
 function restartApp() {
   console.log("Restarting the application...");

@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
 
 const NavBar = () => {
   return (
@@ -10,9 +10,19 @@ const NavBar = () => {
           <Nav.Link href="/tasks">Manage Tasks</Nav.Link>
           <Nav.Link href="/activities">Manage Activities</Nav.Link>
           <Nav.Link href="/performance">Performance</Nav.Link>
-          <Nav.Link href="/notifications">Notifications</Nav.Link>
           <Nav.Link href="/create/task">Add Task</Nav.Link>
           <Nav.Link href="/create/activity">Add Activity</Nav.Link>
+          <Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-basic">
+              Notification
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Nav>
       </Container>
     </Navbar>

@@ -31,6 +31,8 @@ notificationRouter.post("/task", async (req, res) => {
   }
 });
 
+//API GET
+
 //API - CREATE ACTIVITY NOTIFICATION
 
 export default notificationRouter;

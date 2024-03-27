@@ -31,11 +31,17 @@ const NotificationDropDown = () => {
   return (
     <div>
       {notifications ? (
-        notifications.map((notification, i) => (
-          <Dropdown.Item key={i} href="#/action-1">
-            {notification.name} task has {notification.status}.
-          </Dropdown.Item>
-        ))
+        notifications.map((notification, i) =>
+          notification.name ? (
+            <Dropdown.Item key={i} href="#/action-1">
+              {notification.name} task has {notification.status}.
+            </Dropdown.Item>
+          ) : (
+            <Dropdown.Item key={i} href="#/action-1">
+              {notification.title} activity has {notification.status}.
+            </Dropdown.Item>
+          )
+        )
       ) : (
         <Dropdown.Item>No any notifications</Dropdown.Item>
       )}

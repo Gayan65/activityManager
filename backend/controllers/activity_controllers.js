@@ -398,6 +398,7 @@ activityRouter.patch("/update/:id", async (req, res) => {
   res.status(200).json({
     success: true,
     message: "Activity updated successfully!",
+    activity: updatedActivity,
   });
 });
 export default activityRouter;

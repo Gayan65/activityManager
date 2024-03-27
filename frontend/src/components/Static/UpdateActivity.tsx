@@ -75,6 +75,15 @@ const UpdateActivity = () => {
       .patch(`http://localhost:4000/activity/update/${params.id}`, data)
       .then((response) => {
         console.log(response.data);
+        //Update the notification table
+        const notification = {
+          activityId: response.data.activity.id,
+          status: "updated",
+        };
+        const notificationData = qs.stringify(notification);
+        axios
+          .post("http://localhost:4000/notification/activity", notificationData)
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
 

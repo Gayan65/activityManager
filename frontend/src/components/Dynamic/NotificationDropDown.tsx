@@ -2,11 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 
-interface Props {
-  updateNotificationCount: (count: number) => void;
-}
-
-const NotificationDropDown: React.FC<Props> = ({ updateNotificationCount }) => {
+const NotificationDropDown = () => {
   //DEFINE NOTIFICATION STRUCTURE
   interface Notification {
     id: number;
@@ -29,10 +25,9 @@ const NotificationDropDown: React.FC<Props> = ({ updateNotificationCount }) => {
       .then((response) => {
         console.log(response.data.notifications);
         setNotifications(response.data.notifications as Notification[]);
-        updateNotificationCount(response.data.notifications.length);
       })
       .catch((err) => console.log(err));
-  }, [updateNotificationCount]);
+  }, []);
   return (
     <div>
       {notifications ? (

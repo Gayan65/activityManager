@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Container, Nav, Dropdown, Badge } from "react-bootstrap";
 import NotificationDropDown from "./NotificationDropDown";
+import axios from "axios";
 
 const NavBar = () => {
-  const [notificationCount, setNotificationCount] = useState<number>(0);
+  const [notifications, setNotifications] = useState<any[]>([]);
 
-  const updateNotificationCount = (count: number) => {
-    setNotificationCount(count);
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/notification/all"
+      );
+      setNotifications(response.data.notifications || []);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
   };
+
   return (
     <Navbar bg="dark" data-bs-theme="dark">
       <Container>
@@ -20,13 +33,11 @@ const NavBar = () => {
           <Nav.Link href="/create/activity">Add Activity</Nav.Link>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
-              Notifications <Badge bg="secondary">{notificationCount}</Badge>
+              Notifications <Badge bg="secondary">{notifications.length}</Badge>
             </Dropdown.Toggle>
             {/* NOTIFICATION DROP DOWN START*/}
             <Dropdown.Menu>
-              <NotificationDropDown
-                updateNotificationCount={updateNotificationCount}
-              />
+              <NotificationDropDown />
             </Dropdown.Menu>
             {/* NOTIFICATION DROP DOWN END*/}
           </Dropdown>

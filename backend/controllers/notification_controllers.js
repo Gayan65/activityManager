@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 
 import {
+  createActivityNotification,
   createTaskNotification,
   getAllNotifications,
 } from "../services/notification_services.js";
@@ -57,6 +58,30 @@ notificationRouter.get("/all", async (req, res) => {
     });
   }
 });
+
 //API - CREATE ACTIVITY NOTIFICATION
+notificationRouter.post("/activity", async (req, res) => {
+  try {
+    const { activityId, status } = req.body;
+    const notification = await createActivityNotification(activityId, status);
+    if (notification.rowCount > 0) {
+      res.status(200).json({
+        success: true,
+        message: "Notification added successfully!",
+        notification: notification.rows,
+      });
+    } else {
+      res.status(200).json({
+        success: false,
+        message: "Notification can not be added!",
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error,
+    });
+  }
+});
 
 export default notificationRouter;

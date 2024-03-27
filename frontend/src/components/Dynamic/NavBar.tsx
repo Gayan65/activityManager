@@ -1,8 +1,13 @@
-import React from "react";
-import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
+import React, { useState } from "react";
+import { Navbar, Container, Nav, Dropdown, Badge } from "react-bootstrap";
 import NotificationDropDown from "./NotificationDropDown";
 
 const NavBar = () => {
+  const [notificationCount, setNotificationCount] = useState<number>(0);
+
+  const updateNotificationCount = (count: number) => {
+    setNotificationCount(count);
+  };
   return (
     <Navbar bg="dark" data-bs-theme="dark">
       <Container>
@@ -15,11 +20,13 @@ const NavBar = () => {
           <Nav.Link href="/create/activity">Add Activity</Nav.Link>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
-              Notification
+              Notifications <Badge bg="secondary">{notificationCount}</Badge>
             </Dropdown.Toggle>
             {/* NOTIFICATION DROP DOWN START*/}
             <Dropdown.Menu>
-              <NotificationDropDown />
+              <NotificationDropDown
+                updateNotificationCount={updateNotificationCount}
+              />
             </Dropdown.Menu>
             {/* NOTIFICATION DROP DOWN END*/}
           </Dropdown>

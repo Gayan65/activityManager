@@ -145,6 +145,7 @@ taskRouter.post("/create", async (req, res) => {
   res.status(200).json({
     success: true,
     message: "Task added successfully!",
+    task: createdTask,
   });
 });
 

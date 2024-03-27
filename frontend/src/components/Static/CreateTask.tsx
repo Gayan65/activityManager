@@ -60,6 +60,15 @@ const CreateTask = () => {
       .post("http://localhost:4000/task/create", data)
       .then((response) => {
         console.log(response.data);
+        //Update the notification table
+        const notification = {
+          taskId: response.data.task.id,
+          status: "created",
+        };
+        const notificationData = qs.stringify(notification);
+        axios
+          .post("http://localhost:4000/notification/task", notificationData)
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
 

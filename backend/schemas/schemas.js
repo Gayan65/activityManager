@@ -80,8 +80,8 @@ async function createSchemaAndTables() {
         CREATE TABLE IF NOT EXISTS Notification (
           Id SERIAL PRIMARY KEY,
           Status VARCHAR(255) NOT NULL,
-          TaskId INTEGER REFERENCES Task(Id),
-          ActivityId INTEGER REFERENCES Activity(Id)
+          TaskId INTEGER REFERENCES Task(Id) ON DELETE CASCADE,
+          ActivityId INTEGER REFERENCES Activity(Id) ON DELETE CASCADE
         );
       `);
 

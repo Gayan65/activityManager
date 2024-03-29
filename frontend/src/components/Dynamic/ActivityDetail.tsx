@@ -9,6 +9,8 @@ import {
   Stack,
   Badge,
   ProgressBar,
+  Button,
+  CardGroup,
 } from "react-bootstrap";
 import DeleteActivity from "./DeleteActivity";
 import CancelActivity from "./CancelActivity";
@@ -135,14 +137,21 @@ const ActivityDetail = () => {
               now={progressBar.percent}
             />
           )}
+          <CardGroup>
+            {" "}
+            {/* PASSING PROPS TO THE DELETE COMPONENT*/}
+            {activity && (
+              <DeleteActivity id={activity.id} title={activity.title} />
+            )}
+            {/* PASSING PROPS TO THE CANCEL COMPONENT*/}
+            {activity && (
+              <CancelActivity id={activity.id} status={activity.status} />
+            )}
+            {activity && (activity.status === 1 || activity.status === 2) && (
+              <EditNavigatorActivity id={activity.id} />
+            )}
+          </CardGroup>
         </Card>
-      )}
-      {/* PASSING PROPS TO THE DELETE COMPONENT*/}
-      {activity && <DeleteActivity id={activity.id} title={activity.title} />}
-      {/* PASSING PROPS TO THE CANCEL COMPONENT*/}
-      {activity && <CancelActivity id={activity.id} status={activity.status} />}
-      {activity && (activity.status === 1 || activity.status === 2) && (
-        <EditNavigatorActivity id={activity.id} />
       )}
     </Container>
   );

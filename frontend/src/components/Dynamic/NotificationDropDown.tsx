@@ -6,8 +6,8 @@ const NotificationDropDown = () => {
   //DEFINE NOTIFICATION STRUCTURE
   interface Notification {
     id: number;
-    taskId: number;
-    activityId: number;
+    taskid: number;
+    activityid: number;
     status: string;
     name: string;
     title: string;
@@ -33,11 +33,14 @@ const NotificationDropDown = () => {
       {notifications ? (
         notifications.map((notification, i) =>
           notification.name ? (
-            <Dropdown.Item key={i} href="#/action-1">
+            <Dropdown.Item key={i} href={`/task/${notification.taskid}`}>
               {notification.name} task has {notification.status}.
             </Dropdown.Item>
           ) : (
-            <Dropdown.Item key={i} href="#/action-1">
+            <Dropdown.Item
+              key={i}
+              href={`/activity/${notification.activityid}`}
+            >
               {notification.title} activity has {notification.status}.
             </Dropdown.Item>
           )

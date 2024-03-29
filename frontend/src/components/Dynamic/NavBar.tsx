@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Container, Nav, Dropdown, Badge } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Nav,
+  Dropdown,
+  Badge,
+  Button,
+} from "react-bootstrap";
 import NotificationDropDown from "./NotificationDropDown";
 import axios from "axios";
 
@@ -8,7 +15,7 @@ const NavBar = () => {
 
   useEffect(() => {
     fetchNotifications();
-  }, []);
+  }, [notifications]);
 
   const fetchNotifications = async () => {
     try {
@@ -19,6 +26,10 @@ const NavBar = () => {
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
+  };
+
+  const clearAllNotifications = () => {
+    axios.delete("").catch((err) => console.log(err));
   };
 
   return (
@@ -37,6 +48,9 @@ const NavBar = () => {
             </Dropdown.Toggle>
             {/* NOTIFICATION DROP DOWN START*/}
             <Dropdown.Menu>
+              <Button variant="primary" onClick={clearAllNotifications}>
+                Clear All
+              </Button>
               <NotificationDropDown />
             </Dropdown.Menu>
             {/* NOTIFICATION DROP DOWN END*/}

@@ -44,8 +44,8 @@ const CancelActivity: React.FC<CancelActivityProps> = ({ id, status }) => {
         setMessage(response.data.message);
         //Update the notification table
         const notification = {
-          activityId: response.data.updatedactivity.id,
-          status: "updated",
+          activityId: response.data.updatedactivity[0].id,
+          status: "canceled",
         };
         const notificationData = qs.stringify(notification);
         axios

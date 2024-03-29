@@ -42,6 +42,15 @@ const CancelTask: React.FC<CancelTaskProps> = ({ id, status }) => {
       .then((response) => {
         console.log(response.data);
         setMessage(response.data.message);
+        //Update the notification table
+        const notification = {
+          taskId: response.data.updatedtask.id,
+          status: "canceled",
+        };
+        const notificationData = qs.stringify(notification);
+        axios
+          .post("http://localhost:4000/notification/task", notificationData)
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
 

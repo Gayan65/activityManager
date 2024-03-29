@@ -274,7 +274,7 @@ activityRouter.patch("/cancelUpdate/:id", async (req, res) => {
             res.status(200).json({
               success: true,
               message: "The activity classified as canceled",
-              updatedactivity: updateCancelActivity.rows,
+              updatedactivity: updateCancelActivity.rows[0],
             });
           } else {
             res.status(200).json({

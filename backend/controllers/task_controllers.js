@@ -199,7 +199,7 @@ taskRouter.patch("/cancelUpdate/:id", async (req, res) => {
         res.status(200).json({
           success: true,
           message: "The task classified as canceled",
-          updatedtask: updateCancelTask.rows,
+          updatedtask: updateCancelTask.rows[0],
         });
       } else {
         res.status(200).json({

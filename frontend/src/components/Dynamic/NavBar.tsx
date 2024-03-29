@@ -29,7 +29,9 @@ const NavBar = () => {
   };
 
   const clearAllNotifications = () => {
-    axios.delete("").catch((err) => console.log(err));
+    axios
+      .delete("http://localhost:4000/notification/clear")
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -48,9 +50,11 @@ const NavBar = () => {
             </Dropdown.Toggle>
             {/* NOTIFICATION DROP DOWN START*/}
             <Dropdown.Menu>
-              <Button variant="primary" onClick={clearAllNotifications}>
-                Clear All
-              </Button>
+              {notifications.length > 0 && (
+                <Button variant="primary" onClick={clearAllNotifications}>
+                  Clear All
+                </Button>
+              )}
               <NotificationDropDown />
             </Dropdown.Menu>
             {/* NOTIFICATION DROP DOWN END*/}

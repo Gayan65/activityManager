@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import {
   createActivityNotification,
   createTaskNotification,
+  deleteAllNotifications,
   getAllNotifications,
 } from "../services/notification_services.js";
 
@@ -74,6 +75,30 @@ notificationRouter.post("/activity", async (req, res) => {
       res.status(200).json({
         success: false,
         message: "Notification can not be added!",
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error,
+    });
+  }
+});
+
+// API - DELETE ALL NOTIFICATIONS
+notificationRouter.delete("/clear", async (req, res) => {
+  try {
+    const notification = await deleteAllNotifications();
+    if (notification.rowCount > 0) {
+      res.status(200).json({
+        success: true,
+        message: "Notifications deleted successfully!",
+        notification: notification.rows,
+      });
+    } else {
+      res.status(200).json({
+        success: false,
+        message: "Notification can not be deleted!",
       });
     }
   } catch (error) {

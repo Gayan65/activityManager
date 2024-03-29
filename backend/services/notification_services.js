@@ -25,3 +25,9 @@ export const getAllNotifications = async () => {
   );
   return res;
 };
+
+//DELETE  ALL NOTIFICATIONS - SQL
+export const deleteAllNotifications = async () => {
+  const res = await db.query("DELETE FROM notification");
+  return res;
+};

@@ -66,7 +66,6 @@ const ActivityDetail = () => {
       .then((response) => {
         setActivity(response.data.activity[0] as Activity);
         setLoader(false);
-        console.log(response.data.activity[0]);
 
         //HANDLING PROGRESS BAR
         if (response.data.activity[0].status === 1)

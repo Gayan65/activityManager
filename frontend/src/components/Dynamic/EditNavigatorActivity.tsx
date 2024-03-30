@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 // Define the prop types for the component
@@ -16,9 +16,13 @@ const EditNavigatorActivity: React.FC<EditTaskProps> = ({ id }) => {
   };
   return (
     <div className="mt-5">
-      <Button variant="success" onClick={handleClick}>
-        Edit
-      </Button>
+      <Card style={{ width: "18rem" }}>
+        <Card.Body>
+          <Button variant="success" onClick={handleClick}>
+            Edit
+          </Button>
+        </Card.Body>
+      </Card>
     </div>
   );
 };

@@ -9,7 +9,6 @@ import {
   Stack,
   Badge,
   ProgressBar,
-  Button,
   CardGroup,
 } from "react-bootstrap";
 import DeleteActivity from "./DeleteActivity";

@@ -8,6 +8,7 @@ import {
   Button,
   Badge,
   Stack,
+  ProgressBar,
 } from "react-bootstrap";
 
 const Home = () => {
@@ -18,6 +19,7 @@ const Home = () => {
     content: string;
     tagnames: string[];
     enddate: string;
+    statustype: number;
   }
 
   // Function to format enddate
@@ -79,6 +81,30 @@ const Home = () => {
                         Due on {formatDate(task.enddate)}
                       </Stack>
                     </Card.Body>
+                    <ProgressBar
+                      variant={
+                        task.statustype === 1
+                          ? "secondary"
+                          : task.statustype === 2
+                          ? "primary"
+                          : task.statustype === 3
+                          ? "success"
+                          : task.statustype === 4
+                          ? "danger"
+                          : "default"
+                      }
+                      now={
+                        task.statustype === 1
+                          ? 20
+                          : task.statustype === 2
+                          ? 50
+                          : task.statustype === 3
+                          ? 100
+                          : task.statustype === 4
+                          ? 100
+                          : 100
+                      }
+                    />
                   </Card>
                 ))}
               </ListGroup>

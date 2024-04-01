@@ -8,6 +8,7 @@ import {
   Button,
   Stack,
   Badge,
+  ProgressBar,
 } from "react-bootstrap";
 
 const ActivityPage = () => {
@@ -76,6 +77,30 @@ const ActivityPage = () => {
                       Due on {formatDate(activity.enddate)}
                     </Stack>
                   </Card.Body>
+                  <ProgressBar
+                    variant={
+                      activity.statustype === 1
+                        ? "secondary"
+                        : activity.statustype === 2
+                        ? "primary"
+                        : activity.statustype === 3
+                        ? "success"
+                        : activity.statustype === 4
+                        ? "danger"
+                        : "default"
+                    }
+                    now={
+                      activity.statustype === 1
+                        ? 20
+                        : activity.statustype === 2
+                        ? 50
+                        : activity.statustype === 3
+                        ? 100
+                        : activity.statustype === 4
+                        ? 100
+                        : 100
+                    }
+                  />
                 </Card>
               ))}
             </ListGroup>

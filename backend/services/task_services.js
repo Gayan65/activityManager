@@ -36,14 +36,15 @@ export const getTaskFromActivityId = async (activityId) => {
 export const createTask = async (
   name,
   content,
+  createDate,
   startdate,
   enddate,
   activityid,
   status
 ) => {
   const res = await db.query(
-    "INSERT INTO Task (Name, Content, StartDate, EndDate, ActivityId, Status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-    [name, content, startdate, enddate, activityid, status]
+    "INSERT INTO Task (Name, Content, CreateDate, StartDate, EndDate, ActivityId, Status) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+    [name, content, createDate, startdate, enddate, activityid, status]
   );
   return res;
 };

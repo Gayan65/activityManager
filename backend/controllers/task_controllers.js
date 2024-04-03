@@ -106,10 +106,14 @@ taskRouter.post("/create", async (req, res) => {
     return "#" + tag.trim();
   });
 
+  //get today date as created date
+  const createDate = new Date();
+
   //API CREATING TASK
   const task = await createTask(
     name,
     content,
+    createDate,
     startdate,
     enddate,
     activityid,

@@ -49,6 +49,7 @@ async function createSchemaAndTables() {
       Id SERIAL PRIMARY KEY,
       Name VARCHAR(255) NOT NULL,
       Content TEXT,
+      CreateDate DATE,
       StartDate DATE,
       EndDate DATE,
       Tags INTEGER[],

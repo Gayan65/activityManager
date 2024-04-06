@@ -6,11 +6,9 @@ import {
   Dropdown,
   Badge,
   Button,
-  NavDropdown,
 } from "react-bootstrap";
 import NotificationDropDown from "./NotificationDropDown";
 import axios from "axios";
-import Search from "./Search";
 
 const NavBar = () => {
   const [notifications, setNotifications] = useState<any[]>([]);

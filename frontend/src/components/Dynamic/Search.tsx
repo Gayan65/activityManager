@@ -7,7 +7,20 @@ const Search = () => {
       <Card style={{ width: "45rem" }}>
         <Card.Body>
           <Card.Title>Search here</Card.Title>
-
+          <Form.Check
+            inline
+            label="Activity"
+            name="group1"
+            type="radio"
+            id="radio1"
+          />
+          <Form.Check
+            inline
+            label="Task"
+            name="group1"
+            type="radio"
+            id="radio2"
+          />
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>

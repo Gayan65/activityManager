@@ -6,6 +6,7 @@ import {
   Dropdown,
   Badge,
   Button,
+  NavDropdown,
 } from "react-bootstrap";
 import NotificationDropDown from "./NotificationDropDown";
 import axios from "axios";
@@ -59,6 +60,20 @@ const NavBar = () => {
             </Dropdown.Menu>
             {/* NOTIFICATION DROP DOWN END*/}
           </Dropdown>
+
+          {/* SEARCH DROP DOWN START*/}
+          <NavDropdown title="Search" id="collapsible-nav-dropdown">
+            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.2">
+              Another action
+            </NavDropdown.Item>
+            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="#action/3.4">
+              Separated link
+            </NavDropdown.Item>
+          </NavDropdown>
+          {/* SEARCH DROP DOWN END*/}
         </Nav>
       </Container>
     </Navbar>

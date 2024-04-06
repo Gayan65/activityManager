@@ -12,6 +12,7 @@ import CreateTask from "./components/Static/CreateTask";
 import UpdateTask from "./components/Static/UpdateTask";
 import CreateActivity from "./components/Static/CreateActivity";
 import UpdateActivity from "./components/Static/UpdateActivity";
+import Search from "./components/Dynamic/Search";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/tasks" element={<TasksPage />}></Route>
           <Route path="/performance" element={<Performance />}></Route>
           <Route path="/activities" element={<ActivityPage />}></Route>
+          <Route path="/search" element={<Search />}></Route>
           <Route path="/activity/:id" element={<ActivityDetail />}></Route>
           <Route path="/task/:id" element={<TaskDetail />}></Route>
           <Route path="/create/task" element={<CreateTask />}></Route>

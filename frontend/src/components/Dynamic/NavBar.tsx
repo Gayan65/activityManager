@@ -62,17 +62,7 @@ const NavBar = () => {
             {/* NOTIFICATION DROP DOWN END*/}
           </Dropdown>
 
-          {/* SEARCH DROP DOWN START*/}
-          <NavDropdown
-            title="Search"
-            id="collapsible-nav-dropdown"
-            style={{ width: "600px" }}
-          >
-            <NavDropdown.Item>
-              <Search />
-            </NavDropdown.Item>
-          </NavDropdown>
-          {/* SEARCH DROP DOWN END*/}
+          <Nav.Link href="/search">Search</Nav.Link>
         </Nav>
       </Container>
     </Navbar>

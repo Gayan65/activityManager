@@ -17,14 +17,18 @@ const Search = () => {
                 placeholder="Name"
               />
             </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Status</Form.Label>
-              <Form.Control
-                className="mb-2"
-                id="inlineFormInput"
-                placeholder="Status"
-              />
+
+            <Form.Group className="mb-3" controlId="formBasicSelect">
+              <Form.Label>Select your Activity</Form.Label>
+              <Form.Control as="select">
+                <option>New</option>
+                <option>In Process</option>
+                <option>Completed</option>
+                <option>Cancelled</option>
+                <option>All</option>
+              </Form.Control>
             </Form.Group>
+
             <Form.Group className="mb-3">
               <Form.Label>Start Date</Form.Label>
               <Form.Control type="date" placeholder="Start Date" />

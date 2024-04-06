@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import NotificationDropDown from "./NotificationDropDown";
 import axios from "axios";
+import Search from "./Search";
 
 const NavBar = () => {
   const [notifications, setNotifications] = useState<any[]>([]);
@@ -62,15 +63,13 @@ const NavBar = () => {
           </Dropdown>
 
           {/* SEARCH DROP DOWN START*/}
-          <NavDropdown title="Search" id="collapsible-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">
-              Another action
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">
-              Separated link
+          <NavDropdown
+            title="Search"
+            id="collapsible-nav-dropdown"
+            style={{ width: "600px" }}
+          >
+            <NavDropdown.Item>
+              <Search />
             </NavDropdown.Item>
           </NavDropdown>
           {/* SEARCH DROP DOWN END*/}

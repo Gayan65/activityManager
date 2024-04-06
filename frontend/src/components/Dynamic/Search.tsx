@@ -2,14 +2,35 @@ import React, { useState } from "react";
 import { Form, Button, Card, Container } from "react-bootstrap";
 
 const Search = () => {
-  //STATE FOR RADIO BUTTONS
-  const [selectedOption, setSelectedOption] = useState<string>("Activity");
+  //FORM DATA ONCE PAGE LOAD
+  const defaultFormData = {
+    name: "",
+    status: 1,
+    startdate: "",
+    enddate: "",
+  };
+
+  //-------------FORM DATA SET TO THE STATE-----------------
+  const [formData, setFormData] = useState(defaultFormData); // FORM DATA
+  const [selectedOption, setSelectedOption] = useState<string>("Activity"); //STATE FOR RADIO BUTTONS
 
   //HANDLING RADIO BUTTON EVENTS
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
     console.log(event.target.value);
   };
+
+  //--------------HANDLE INPUT CHANGE-----------------
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setFormData((prevSate) => ({
+      ...prevSate,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  //ON SUBMIT HERE
 
   return (
     <Container className="mt-5">

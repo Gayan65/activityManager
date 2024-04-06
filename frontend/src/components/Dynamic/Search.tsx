@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Button, Card, Container } from "react-bootstrap";
 
 const Search = () => {
+  //STATE FOR RADIO BUTTONS
+  const [selectedOption, setSelectedOption] = useState<string>("Activity");
+
+  //HANDLING RADIO BUTTON EVENTS
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedOption(event.target.value);
+    console.log(event.target.value);
+  };
+
   return (
     <Container className="mt-5">
       <Card style={{ width: "45rem" }}>
@@ -13,6 +22,9 @@ const Search = () => {
             name="group1"
             type="radio"
             id="radio1"
+            value="Activity"
+            checked={selectedOption === "Activity"}
+            onChange={handleRadioChange}
           />
           <Form.Check
             inline
@@ -20,6 +32,9 @@ const Search = () => {
             name="group1"
             type="radio"
             id="radio2"
+            value="Task"
+            checked={selectedOption === "Task"}
+            onChange={handleRadioChange}
           />
           <Form>
             <Form.Group className="mb-3">

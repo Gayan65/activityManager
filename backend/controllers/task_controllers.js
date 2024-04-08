@@ -307,7 +307,6 @@ taskRouter.patch("/update/:id", async (req, res) => {
 taskRouter.post("/search", async (req, res) => {
   try {
     const { name, status, startdate, enddate } = req.body;
-    console.log(name, status, startdate, enddate);
     const searchResults = await searchTask(name, status, startdate, enddate);
 
     if (searchResults.rowCount > 0) {

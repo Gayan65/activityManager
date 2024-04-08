@@ -94,7 +94,7 @@ export const searchTask = async (name) => {
   return res;
 };
 */
-
+/*
 export const searchTask = async (name, status, startdate, enddate) => {
   const res = await db.query(
     `SELECT id, name, content, startdate, enddate, status, activityid
@@ -107,5 +107,41 @@ export const searchTask = async (name, status, startdate, enddate) => {
      ORDER BY name;`,
     [status, name, startdate, enddate].filter(Boolean) // Filter out undefined or null values
   );
+  return res;
+};
+*/
+
+export const searchTask = async (name, status, startdate, enddate) => {
+  const queryParams = [];
+  let queryString = `
+    SELECT id, name, content, startdate, enddate, status, activityid
+    FROM public.task
+    WHERE `;
+
+  if (status !== undefined && status !== null) {
+    queryString += `status = $${queryParams.length + 1}`;
+    queryParams.push(status);
+  } else {
+    queryString += `TRUE`;
+  }
+
+  if (name) {
+    queryString += ` AND task.name = $${queryParams.length + 1}`;
+    queryParams.push(name);
+  }
+
+  if (startdate) {
+    queryString += ` AND startdate >= $${queryParams.length + 1}`;
+    queryParams.push(startdate);
+  }
+
+  if (enddate) {
+    queryString += ` AND enddate <= $${queryParams.length + 1}`;
+    queryParams.push(enddate);
+  }
+
+  queryString += ` ORDER BY name;`;
+
+  const res = await db.query(queryString, queryParams);
   return res;
 };

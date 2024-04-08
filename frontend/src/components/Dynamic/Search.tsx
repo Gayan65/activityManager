@@ -51,6 +51,21 @@ const Search = () => {
     //Calling axios to send the data to api
     console.log(formData);
     setErrorMessage("Data add successfully");
+    if (selectedOption === "Task") {
+      axios
+        .post("http://localhost:4000/task/search", data)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios
+        .post("http://localhost:4000/activity/search", data)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => console.log(err));
+    }
 
     setFormData(defaultFormData);
 

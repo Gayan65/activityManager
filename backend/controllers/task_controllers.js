@@ -302,4 +302,16 @@ taskRouter.patch("/update/:id", async (req, res) => {
   });
 });
 
+//SEARCH CONTROLLERS
+taskRouter.post("/search", async (req, res) => {
+  try {
+    const { name, status, startdate, enddate } = req.body;
+    console.log(name, status, startdate, enddate);
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
 export default taskRouter;

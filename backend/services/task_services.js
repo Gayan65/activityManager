@@ -81,3 +81,31 @@ export const updateTask = async (
   );
   return res;
 };
+
+/*
+//SEARCH QUERIES
+export const searchTask = async (name) => {
+  console.log("services");
+  const res = await db.query(
+    `SELECT * FROM task WHERE task.name = $1 ORDER BY name`,
+    [name]
+  );
+  console.log("services");
+  return res;
+};
+*/
+
+export const searchTask = async (name, status, startdate, enddate) => {
+  const res = await db.query(
+    `SELECT id, name, content, startdate, enddate, status, activityid
+     FROM public.task
+     WHERE 
+         (${status ? "status = $1" : "TRUE"})
+         ${name ? "AND task.name = $2" : ""}
+         ${startdate ? "AND startdate >= $3" : ""}
+         ${enddate ? "AND enddate <= $4" : ""}
+     ORDER BY name;`,
+    [status, name, startdate, enddate].filter(Boolean) // Filter out undefined or null values
+  );
+  return res;
+};

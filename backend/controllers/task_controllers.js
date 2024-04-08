@@ -11,6 +11,7 @@ import {
   deleteTask,
   cancelTask,
   updateTask,
+  searchTask,
 } from "../services/task_services.js";
 
 import {
@@ -307,6 +308,20 @@ taskRouter.post("/search", async (req, res) => {
   try {
     const { name, status, startdate, enddate } = req.body;
     console.log(name, status, startdate, enddate);
+    const searchResults = await searchTask(name, status, startdate, enddate);
+
+    if (searchResults.rowCount > 0) {
+      res.status(200).json({
+        success: true,
+        from: "task",
+        tasks: searchResults.rows,
+      });
+    } else {
+      res.status(200).json({
+        success: false,
+        from: "task",
+      });
+    }
   } catch (error) {
     res.status(400).json({
       success: false,

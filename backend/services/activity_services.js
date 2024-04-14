@@ -79,7 +79,7 @@ export const updateActivity = async (
 export const searchActivity = async (name, status, startdate, enddate) => {
   const queryParams = [];
   let queryString = `
-    SELECT id, title, description, startdate, enddate, status, FROM public.activity
+    SELECT id, title, description, startdate, enddate, status FROM public.activity
     WHERE `;
 
   if (status !== undefined && status !== null) {
@@ -106,6 +106,12 @@ export const searchActivity = async (name, status, startdate, enddate) => {
 
   queryString += ` ORDER BY title;`;
 
-  const res = await db.query(queryString, queryParams);
-  return res;
+  try {
+    const res = await db.query(queryString, queryParams);
+    return res;
+  } catch (error) {
+    // Handle the error appropriately
+    console.error("Error executing SQL query:", error);
+    throw error;
+  }
 };

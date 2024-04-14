@@ -406,7 +406,26 @@ activityRouter.patch("/update/:id", async (req, res) => {
 activityRouter.post("/search", async (req, res) => {
   try {
     const { name, status, startdate, enddate } = req.body;
-    console.log(name, status, startdate, enddate);
+
+    const searchResults = await searchActivity(
+      name,
+      status,
+      startdate,
+      enddate
+    );
+
+    if (searchResults.rowCount > 0) {
+      res.status(200).json({
+        success: true,
+        from: "activity",
+        Activities: searchResults.rows,
+      });
+    } else {
+      res.status(200).json({
+        success: false,
+        from: "activity",
+      });
+    }
   } catch (error) {
     res.status(400).json({
       success: false,

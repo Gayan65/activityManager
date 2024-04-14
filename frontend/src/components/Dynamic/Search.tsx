@@ -1,9 +1,18 @@
 import React, { useState } from "react";
 import qs from "qs";
 import axios from "axios";
-import { Form, Button, Card, Container, Alert } from "react-bootstrap";
+import { Form, Button, Card, Container, Alert, Badge } from "react-bootstrap";
 
 const Search = () => {
+  //DEFINE THE TASK OBJ
+  interface Task {
+    id: number;
+    name: string;
+    content: string;
+    enddate: string;
+    statustype: number;
+  }
+
   //FORM DATA ONCE PAGE LOAD
   const defaultFormData = {
     name: "",
@@ -16,6 +25,7 @@ const Search = () => {
   const [formData, setFormData] = useState(defaultFormData); // FORM DATA
   const [selectedOption, setSelectedOption] = useState<string>("Activity"); //STATE FOR RADIO BUTTONS
   const [errorMessage, setErrorMessage] = useState("");
+  const [tasks, setTasks] = useState<Task[] | null>(null);
 
   //HANDLING RADIO BUTTON EVENTS
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,6 +66,11 @@ const Search = () => {
         .post("http://localhost:4000/task/search", data)
         .then((response) => {
           console.log(response);
+          if (response.data.success) {
+            setTasks(response.data.tasks as Task[]);
+          } else {
+            setTasks(null);
+          }
         })
         .catch((err) => console.log(err));
     } else {
@@ -167,6 +182,28 @@ const Search = () => {
               </Alert>
             )}
           </Form>
+        </Card.Body>
+      </Card>
+      <Card className="mt-5" style={{ width: "45rem" }}>
+        <Card.Body>
+          <Card.Title>Search Result</Card.Title>
+          {tasks &&
+            tasks.map((task, id) => (
+              <Card style={{ width: "35rem" }} key={id}>
+                <Card.Body>
+                  <Card.Title>
+                    <Badge className="me-3" bg="secondary">
+                      {id + 1}
+                    </Badge>
+                    {task.name}
+                  </Card.Title>
+                  <Card.Text>{task.content}</Card.Text>
+                  <Button variant="primary" href={`/task/${task.id}`}>
+                    View Task
+                  </Button>
+                </Card.Body>
+              </Card>
+            ))}
         </Card.Body>
       </Card>
     </Container>

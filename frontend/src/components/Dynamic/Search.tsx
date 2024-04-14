@@ -13,6 +13,15 @@ const Search = () => {
     statustype: number;
   }
 
+  //DEFINE THE TASK OBJ
+  interface Activity {
+    id: number;
+    title: string;
+    description: string;
+    enddate: string;
+    statustype: number;
+  }
+
   //FORM DATA ONCE PAGE LOAD
   const defaultFormData = {
     name: "",
@@ -26,6 +35,7 @@ const Search = () => {
   const [selectedOption, setSelectedOption] = useState<string>("Activity"); //STATE FOR RADIO BUTTONS
   const [errorMessage, setErrorMessage] = useState("");
   const [tasks, setTasks] = useState<Task[] | null>(null);
+  const [activities, setActivities] = useState<Activity[] | null>(null);
 
   //HANDLING RADIO BUTTON EVENTS
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,6 +88,11 @@ const Search = () => {
         .post("http://localhost:4000/activity/search", data)
         .then((response) => {
           console.log(response);
+          if (response.data.success) {
+            setActivities(response.data.Activities as Activity[]);
+          } else {
+            setTasks(null);
+          }
         })
         .catch((err) => console.log(err));
     }
@@ -187,7 +202,8 @@ const Search = () => {
       <Card className="mt-5" style={{ width: "45rem" }}>
         <Card.Body>
           <Card.Title>Search Result</Card.Title>
-          {tasks &&
+          {selectedOption === "Task" &&
+            tasks &&
             tasks.map((task, id) => (
               <Card style={{ width: "35rem" }} key={id}>
                 <Card.Body>
@@ -199,6 +215,24 @@ const Search = () => {
                   </Card.Title>
                   <Card.Text>{task.content}</Card.Text>
                   <Button variant="primary" href={`/task/${task.id}`}>
+                    View Task
+                  </Button>
+                </Card.Body>
+              </Card>
+            ))}
+          {selectedOption === "Activity" &&
+            activities &&
+            activities.map((activity, id) => (
+              <Card style={{ width: "35rem" }} key={id}>
+                <Card.Body>
+                  <Card.Title>
+                    <Badge className="me-3" bg="secondary">
+                      {id + 1}
+                    </Badge>
+                    {activity.title}
+                  </Card.Title>
+                  <Card.Text>{activity.description}</Card.Text>
+                  <Button variant="primary" href={`/activity/${activity.id}`}>
                     View Task
                   </Button>
                 </Card.Body>

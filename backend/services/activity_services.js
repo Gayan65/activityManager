@@ -74,3 +74,38 @@ export const updateActivity = async (
   );
   return res;
 };
+
+//SEARCH ACTIVITY IN SQL
+export const searchActivity = async (name, status, startdate, enddate) => {
+  const queryParams = [];
+  let queryString = `
+    SELECT id, title, description, startdate, enddate, status, FROM public.activity
+    WHERE `;
+
+  if (status !== undefined && status !== null) {
+    queryString += `status = $${queryParams.length + 1}`;
+    queryParams.push(status);
+  } else {
+    queryString += `TRUE`;
+  }
+
+  if (name) {
+    queryString += ` AND activity.title = $${queryParams.length + 1}`;
+    queryParams.push(name);
+  }
+
+  if (startdate) {
+    queryString += ` AND startdate >= $${queryParams.length + 1}`;
+    queryParams.push(startdate);
+  }
+
+  if (enddate) {
+    queryString += ` AND enddate <= $${queryParams.length + 1}`;
+    queryParams.push(enddate);
+  }
+
+  queryString += ` ORDER BY title;`;
+
+  const res = await db.query(queryString, queryParams);
+  return res;
+};

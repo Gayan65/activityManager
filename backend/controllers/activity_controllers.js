@@ -11,6 +11,7 @@ import {
   getAllActivities,
   getAllCurrentActivities,
   updateActivity,
+  searchActivity,
 } from "../services/activity_services.js";
 import {
   addTag,

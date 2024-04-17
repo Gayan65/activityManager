@@ -26,7 +26,7 @@ app.use("/notification", notificationRouter);
 
 function restartApp() {
   console.log("Restarting the application...");
-  const nodemon = spawn("nodemon");
+  const nodemon = spawn("node", ["node_modules/nodemon/bin/nodemon.js"]); // ADD NEW LINE work with both linux and windows
   nodemon.stdin.write("rs\n"); // Send the "rs" command to the input stream
   nodemon.stdout.on("data", (data) => {
     console.log(`stdout: ${data}`);

@@ -145,3 +145,25 @@ export const searchTask = async (name, status, startdate, enddate) => {
   const res = await db.query(queryString, queryParams);
   return res;
 };
+
+//PERFORMANCE SECTION - SQL
+export const createTaskCount = async () => {
+  const res = await db.query(
+    "SELECT DATE_TRUNC('week', startdate) AS week_start, COUNT(*) AS num_tasks_created FROM tasks GROUP BY DATE_TRUNC('week', startdate) ORDER BY week_start;"
+  );
+  return res;
+};
+
+export const completedTaskCount = async () => {
+  const res = await db.query(
+    "SELECT COUNT(*) AS num_tasks_completed_last_7_days FROM task WHERE status = '3' AND enddate >= CURRENT_DATE - INTERVAL '6 days'  -- Starting from 7 days ago AND enddate < CURRENT_DATE + INTERVAL '1 day';  -- Up to today (not inclusive)"
+  );
+  return res;
+};
+
+export const onGoingTaskCount = async () => {
+  const res = await db.query(
+    "SELECT COUNT(*) AS num_ongoing_tasks_last_7_days FROM task WHERE status != '2' AND startdate <= CURRENT_DATE  -- Tasks that started on or before today AND (enddate IS NULL OR enddate >= CURRENT_DATE - INTERVAL '7 days');  -- Tasks that have no end date or end date is within the last 7 days"
+  );
+  return res;
+};

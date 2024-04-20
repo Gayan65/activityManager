@@ -12,6 +12,9 @@ import {
   cancelTask,
   updateTask,
   searchTask,
+  createTaskCount,
+  completedTaskCount,
+  onGoingTaskCount,
 } from "../services/task_services.js";
 
 import {
@@ -330,12 +333,16 @@ taskRouter.post("/search", async (req, res) => {
 });
 
 //PERFORMANCE SECTION - API
-//created tasks
-taskRouter.get("performance/create_task", async (req, res) => {
+taskRouter.get("/performance", async (req, res) => {
   try {
     const createdTasks = await createTaskCount();
-    const completedTasks = await completedTaskCount();
-    const onGoingTasks = await onGoingTaskCount();
+    //const completedTasks = await completedTaskCount();
+    //const onGoingTasks = await onGoingTaskCount();
+    res.status(200).json({
+      created: createdTasks.rows,
+      //completed: completedTasks.rows,
+      //onGoing: onGoingTasks.rows,
+    });
   } catch (error) {
     res.status(400).json({
       success: false,

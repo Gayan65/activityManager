@@ -342,7 +342,7 @@ taskRouter.get("/performance/task", async (req, res) => {
 
     res.status(200).json({
       success: true,
-      createTasks: createTasks.rows,
+      createTasks: createTasks.rows[createTasks.rows.length - 1],
       completedTask: completeTasks.rows,
       onGoingTask: onGoingTasks.rows,
     });

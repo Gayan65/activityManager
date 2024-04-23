@@ -1,4 +1,5 @@
 import axios from "axios";
+import Performance from "../Dynamic/Performance";
 import React, { useEffect, useState } from "react";
 import {
   Container,
@@ -117,7 +118,10 @@ const Home = () => {
         {/* CURRENT TASKS VIEW ENDS*/}
       </Container>
       <Container>{/* PERFORMANCE VIEW */}</Container>
-      <Container>{/* NOTIFICATIONS TASKS VIEW */}</Container>
+      <Container>
+        {" "}
+        <Performance />{" "}
+      </Container>
     </Container>
   );
 };

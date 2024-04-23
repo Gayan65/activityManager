@@ -337,14 +337,21 @@ taskRouter.post("/search", async (req, res) => {
 taskRouter.get("/performance/task", async (req, res) => {
   try {
     const createTasks = await createTaskCount();
-    //const completeTasks = await completedTaskCount();
-    //const onGoingTasks = await onGoingTaskCount();
+    const completeTasks = await completedTaskCount();
+    const onGoingTasks = await onGoingTaskCount();
 
     res.status(200).json({
       success: true,
       createTasks: createTasks.rows,
+      completedTask: completeTasks.rows,
+      onGoingTask: onGoingTasks.rows,
     });
-  } catch (error) {}
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
 });
 
 export default taskRouter;

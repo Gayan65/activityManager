@@ -333,21 +333,18 @@ taskRouter.post("/search", async (req, res) => {
 });
 
 //PERFORMANCE SECTION - API
-taskRouter.get("/performance", async (req, res) => {
+
+taskRouter.get("/performance/task", async (req, res) => {
   try {
-    const createdTasks = await createTaskCount();
-    //const completedTasks = await completedTaskCount();
+    const createTasks = await createTaskCount();
+    //const completeTasks = await completedTaskCount();
     //const onGoingTasks = await onGoingTaskCount();
+
     res.status(200).json({
-      created: createdTasks.rows,
-      //completed: completedTasks.rows,
-      //onGoing: onGoingTasks.rows,
+      success: true,
+      createTasks: createTasks.rows,
     });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      error: error.message,
-    });
-  }
+  } catch (error) {}
 });
+
 export default taskRouter;

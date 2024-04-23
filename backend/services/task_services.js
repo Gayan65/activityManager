@@ -149,7 +149,7 @@ export const searchTask = async (name, status, startdate, enddate) => {
 //PERFORMANCE SECTION - SQL
 export const createTaskCount = async () => {
   const res = await db.query(
-    "SELECT DATE_TRUNC('week', startdate) AS week_start, COUNT(*) AS num_tasks_created FROM tasks GROUP BY DATE_TRUNC('week', startdate) ORDER BY week_start;"
+    "SELECT DATE_TRUNC('week', startdate) AS week_start, COUNT(*) AS num_tasks_created FROM task GROUP BY DATE_TRUNC('week', startdate) ORDER BY week_start;"
   );
   return res;
 };

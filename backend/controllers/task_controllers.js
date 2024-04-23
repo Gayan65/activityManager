@@ -15,6 +15,7 @@ import {
   createTaskCount,
   completedTaskCount,
   onGoingTaskCount,
+  canceledTaskCount,
 } from "../services/task_services.js";
 
 import {
@@ -339,12 +340,13 @@ taskRouter.get("/performance/task", async (req, res) => {
     const createTasks = await createTaskCount();
     const completeTasks = await completedTaskCount();
     const onGoingTasks = await onGoingTaskCount();
+    const canceledTasks = await canceledTaskCount();
 
     res.status(200).json({
-      success: true,
-      createTasks: createTasks.rows[createTasks.rows.length - 1],
-      completedTask: completeTasks.rows,
-      onGoingTask: onGoingTasks.rows,
+      createTask: createTasks.rows[0].taskcreated,
+      completedTask: completeTasks.rows[0].completedtask,
+      onGoingTask: onGoingTasks.rows[0].ongoingtask,
+      canceledTask: canceledTasks.rows[0].canceledtask,
     });
   } catch (error) {
     res.status(400).json({

@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 
 const Performance = () => {
-    return <Container>Performance Page</Container>;
+    return <span>Performance Page</span>;
 };
 
 export default Performance;

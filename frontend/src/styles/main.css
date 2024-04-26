@@ -2249,7 +2249,7 @@ sup.notificationNumber {
     padding: 2px 5px;
     margin-left: -13px;
     margin-top: 29px !important;
-    background: #0d6efd;
+    background: #4cc0e3;
     top: -15px;
 }
 button.clear-button {
@@ -2378,20 +2378,214 @@ span.tags.badge.rounded-pill.bg-primary {
     box-shadow: 0 0 0 1px rgb(71 71 71 / 25%);
 }
 button.submit-Btn.btn.btn-primary {
-    padding: 8px 10px;
+    padding: 8px 8px;
     font-size: 19px;
     border-radius: 3px;
-    border: 3px solid #0d6efd;
+    border: 3px solid #4cc0e3;
     box-shadow: 1px 4px 11px -5px #000;
     transition: 0.5s ease;
+    background-color: #4cc0e3;
 }
 button.submit-Btn.btn.btn-primary:hover {
     padding: 8px 10px;
     font-size: 17px;
     border-radius: 3px;
-    font-size: 22px;
+    font-size: 19px;
     background: transparent;
-    color: #0d6efd;
+    color: #4cc0e3;
     transition: 0.5s ease;
     box-shadow: 1px 4px 11px -5px #000;
+}
+
+.toggle_radio {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 4px auto;
+    overflow: hidden;
+    padding: 0 !important;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    position: relative;
+    height: 26px;
+    width: 318px;
+}
+.toggle_radio > * {
+    float: left;
+}
+.toggle_radio input[type="radio"] {
+    display: none;
+    /*position: fixed;*/
+}
+.toggle_radio label {
+    font: 90%/1.618 "Source Sans Pro";
+    color: rgba(255, 255, 255, 0.9);
+    z-index: 0;
+    display: block;
+    width: 100px;
+    height: 20px;
+    margin: 3px 3px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 1;
+    /*background: rgba(0,0,0,.1);*/
+    text-align: center;
+    /*margin: 0 2px;*/
+    /*background: blue;*/ /*make it blue*/
+}
+.toggle_option_slider {
+    /*display: none;*/
+    /*background: red;*/
+    width: 100px;
+    height: 20px;
+    position: absolute;
+    top: 3px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+#first_toggle:checked ~ .toggle_option_slider {
+    background: rgba(255, 255, 255, 0.3);
+    left: 3px;
+}
+#second_toggle:checked ~ .toggle_option_slider {
+    background: rgba(255, 255, 255, 0.3);
+    left: 109px;
+}
+.search-result {
+    background: #fff;
+    padding: 10px 20px;
+    border-radius: 10px 0px;
+    border: 2px solid #bdbdbd;
+}
+h2.search-header {
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
+    width: 300px;
+    margin: auto;
+    line-height: 2;
+    font-size: 23px;
+    margin: 20px auto 40px auto;
+}
+.search-header,
+.left-and-right,
+.corner-border,
+.bottom-corner {
+    position: relative;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* top line */
+.search-header::before {
+    content: "";
+    position: absolute;
+    background-color: #4cc0e3;
+    width: 100%;
+    height: 3px;
+    top: 0;
+    left: 0;
+}
+
+/* bottom line */
+.search-header::after {
+    content: "";
+    position: absolute;
+    background-color: #4cc0e3;
+    width: 100%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+}
+
+/* left line before text*/
+.left-and-right::before {
+    content: "";
+    position: absolute;
+    background-color: #85c1e9;
+    width: 3px;
+    height: 90%;
+    bottom: 0;
+    left: -7px;
+}
+
+/* left line after text*/
+.left-and-right::after {
+    content: "";
+    position: absolute;
+    background-color: #85c1e9;
+    width: 3px;
+    height: 90%;
+    bottom: 0;
+    right: 55px;
+}
+
+/* vertical line */
+.corner-border::after {
+    content: "";
+    position: absolute;
+    background-color: pink;
+    width: 3px;
+    height: 60%;
+    top: 0;
+    left: -15px;
+}
+
+/* horizontal line */
+.corner-border::before {
+    content: "";
+    position: absolute;
+    background-color: pink;
+    width: 20%;
+    height: 3px;
+    top: 0;
+    left: -12px;
+}
+
+/* vertical line */
+.bottom-corner::after {
+    content: "";
+    position: absolute;
+    background-color: #85c1e9;
+    width: 3px;
+    height: 50%;
+    bottom: 0;
+    right: 45px;
+}
+/* horizontal line */
+.bottom-corner::before {
+    content: "";
+    position: absolute;
+    background-color: #85c1e9;
+    width: 20%;
+    height: 3px;
+    bottom: 0;
+    right: 45px;
+}
+span.tags.badge.bg-primary {
+    padding: 7px 7px;
+    border-radius: 4px !important;
+    border-bottom: 4px solid #a91212;
+    background: #efc8c8 !important;
+    color: #000;
+    font-weight: normal;
+    letter-spacing: 0.5px !important;
+}
+span.status {
+    padding: 7px 7px;
+    border-radius: 4px !important;
+    border-bottom: 4px solid #235d0a;
+    background: #4bc120 !important;
+    color: #000;
+    font-weight: normal;
+    letter-spacing: 0.5px !important;
+    font-size: 13px;
 }

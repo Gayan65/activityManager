@@ -2,6 +2,18 @@ import React, { useState } from "react";
 import qs from "qs";
 import axios from "axios";
 import { Form, Button, Card, Container, Alert, Badge } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faPlus,
+    faPenToSquare,
+    faLink,
+    faAlignLeft,
+    faCalendar,
+    faCalendarCheck,
+    faCircleCheck,
+    faTag,
+    faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Search = () => {
     //DEFINE THE TASK OBJ
@@ -106,152 +118,230 @@ const Search = () => {
     };
 
     return (
-        <Container className="mt-5">
-            <Card style={{ width: "45rem" }}>
-                <Card.Body>
-                    <Card.Title>Search here</Card.Title>
+        <div className="page-wrapper">
+            <div className="content-wrapper">
+                <div className="content">
+                    <>
+                        <div className="mainHeader">
+                            <h1>
+                                Search
+                                <FontAwesomeIcon
+                                    icon={faMagnifyingGlass}
+                                    className="bi bi-list-task list-view "
+                                    style={{
+                                        fontSize: "25px",
+                                        paddingLeft: "10px",
+                                    }}
+                                />
+                            </h1>
+                        </div>
 
-                    <Form method="POST" onSubmit={onSubmit}>
-                        <Form.Check
-                            inline
-                            label="Activity"
-                            name="group1"
-                            type="radio"
-                            id="radio1"
-                            value="Activity"
-                            checked={selectedOption === "Activity"}
-                            onChange={handleRadioChange}
-                        />
-                        <Form.Check
-                            inline
-                            label="Task"
-                            name="group1"
-                            type="radio"
-                            id="radio2"
-                            value="Task"
-                            checked={selectedOption === "Task"}
-                            onChange={handleRadioChange}
-                        />
-                        <Form.Group className="mb-3">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control
-                                type="text"
-                                className="mb-2"
-                                placeholder="Name"
-                                onChange={onChange}
-                                name="name"
-                                value={formData.name}
+                        <Form method="POST" onSubmit={onSubmit}>
+                            <label>Select Option</label>
+                            <br></br>
+                            <Form.Check
+                                inline
+                                label="Activity"
+                                name="group1"
+                                type="radio"
+                                id="radio1"
+                                value="Activity"
+                                checked={selectedOption === "Activity"}
+                                onChange={handleRadioChange}
                             />
-                        </Form.Group>
-
-                        <Form.Group
-                            className="mb-3"
-                            controlId="formBasicSelect"
-                        >
-                            <Form.Label>Select Status</Form.Label>
-                            <Form.Control
-                                as="select"
-                                name="status"
-                                onChange={onChange}
-                                value={formData.status}
-                            >
-                                <option value={1}>New</option>
-                                <option value={2}>In Process</option>
-                                <option value={3}>Completed</option>
-                                <option value={4}>Cancelled</option>
-                                <option value={5}>All</option>
-                            </Form.Control>
-                        </Form.Group>
-
-                        <Form.Group className="mb-3">
-                            <Form.Label>Start Date</Form.Label>
-                            <Form.Control
-                                type="date"
-                                placeholder="Start Date"
-                                name="startdate"
-                                onChange={onChange}
-                                value={formData.startdate}
+                            <Form.Check
+                                inline
+                                label="Task"
+                                name="group1"
+                                type="radio"
+                                id="radio2"
+                                value="Task"
+                                checked={selectedOption === "Task"}
+                                onChange={handleRadioChange}
                             />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>End Date</Form.Label>
-                            <Form.Control
-                                type="date"
-                                placeholder="End Date"
-                                name="enddate"
-                                onChange={onChange}
-                                value={formData.enddate}
-                            />
-                        </Form.Group>
+                            <div className="form-group input-group mb-2 mt-2">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text create">
+                                        {" "}
+                                        <FontAwesomeIcon
+                                            icon={faPenToSquare}
+                                            className="bi bi-list-task list-view "
+                                            style={{
+                                                fontSize: " 18px",
+                                                paddingLeft: "5px",
+                                            }}
+                                        />{" "}
+                                    </span>
+                                </div>
+                                <Form.Control
+                                    type="text"
+                                    className="mb-2"
+                                    placeholder="Title"
+                                    onChange={onChange}
+                                    name="name"
+                                    value={formData.name}
+                                />
+                            </div>
+                            <label>Select Status</label>
+                            <div className="form-group input-group mb-2">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text create">
+                                        {" "}
+                                        <FontAwesomeIcon
+                                            icon={faLink}
+                                            className="bi bi-list-task list-view "
+                                            style={{
+                                                fontSize: " 20px",
+                                                paddingLeft: "5px",
+                                            }}
+                                        />{" "}
+                                    </span>
+                                </div>
+                                <Form.Control
+                                    as="select"
+                                    name="status"
+                                    onChange={onChange}
+                                    value={formData.status}
+                                >
+                                    <option value={1}>New</option>
+                                    <option value={2}>In Process</option>
+                                    <option value={3}>Completed</option>
+                                    <option value={4}>Cancelled</option>
+                                    <option value={5}>All</option>
+                                </Form.Control>
+                            </div>
+                            <label>Start Date</label>
+                            <div className="form-group input-group mb-2">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text create">
+                                        {" "}
+                                        <FontAwesomeIcon
+                                            icon={faCalendar}
+                                            className="bi bi-list-task list-view "
+                                            style={{
+                                                fontSize: " 20px",
+                                                paddingLeft: "10px",
+                                            }}
+                                        />{" "}
+                                    </span>
+                                </div>
+                                <Form.Control
+                                    type="date"
+                                    placeholder="Start Date"
+                                    name="startdate"
+                                    onChange={onChange}
+                                    value={formData.startdate}
+                                />
+                            </div>
+                            <label>End Date</label>
+                            <div className="form-group input-group mb-3">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text create">
+                                        {" "}
+                                        <FontAwesomeIcon
+                                            icon={faCalendarCheck}
+                                            className="bi bi-list-task list-view "
+                                            style={{
+                                                fontSize: " 20px",
+                                                paddingLeft: "10px",
+                                            }}
+                                        />{" "}
+                                    </span>
+                                </div>
+                                <Form.Control
+                                    type="date"
+                                    placeholder="End Date"
+                                    name="enddate"
+                                    onChange={onChange}
+                                    value={formData.enddate}
+                                />
+                            </div>{" "}
+                            <div className="row col-md-4 offset-md-4 mt-4">
+                                <Button type="submit" className="submit-Btn">
+                                    Search
+                                </Button>
+                            </div>
+                            {errorMessage && (
+                                <Alert
+                                    className="mt-3"
+                                    variant={
+                                        errorMessage === "Data add successfully"
+                                            ? "success"
+                                            : "danger"
+                                    }
+                                >
+                                    {errorMessage}
+                                </Alert>
+                            )}
+                        </Form>
+                    </>
 
-                        <Button type="submit" className="mb-2">
-                            Search
-                        </Button>
-                        {errorMessage && (
-                            <Alert
-                                className="mt-3"
-                                variant={
-                                    errorMessage === "Data add successfully"
-                                        ? "success"
-                                        : "danger"
-                                }
-                            >
-                                {errorMessage}
-                            </Alert>
-                        )}
-                    </Form>
-                </Card.Body>
-            </Card>
-            <Card className="mt-5" style={{ width: "45rem" }}>
-                <Card.Body>
-                    <Card.Title>Search Result</Card.Title>
-                    {selectedOption === "Task" &&
-                        tasks &&
-                        tasks.map((task, id) => (
-                            <Card style={{ width: "35rem" }} key={id}>
-                                <Card.Body>
-                                    <Card.Title>
-                                        <Badge className="me-3" bg="secondary">
-                                            {id + 1}
-                                        </Badge>
-                                        {task.name}
-                                    </Card.Title>
-                                    <Card.Text>{task.content}</Card.Text>
-                                    <Button
-                                        variant="primary"
-                                        href={`/task/${task.id}`}
-                                    >
-                                        View Task
-                                    </Button>
-                                </Card.Body>
-                            </Card>
-                        ))}
-                    {selectedOption === "Activity" &&
-                        activities &&
-                        activities.map((activity, id) => (
-                            <Card style={{ width: "35rem" }} key={id}>
-                                <Card.Body>
-                                    <Card.Title>
-                                        <Badge className="me-3" bg="secondary">
-                                            {id + 1}
-                                        </Badge>
-                                        {activity.title}
-                                    </Card.Title>
-                                    <Card.Text>
-                                        {activity.description}
-                                    </Card.Text>
-                                    <Button
-                                        variant="primary"
-                                        href={`/activity/${activity.id}`}
-                                    >
-                                        View Task
-                                    </Button>
-                                </Card.Body>
-                            </Card>
-                        ))}
-                </Card.Body>
-            </Card>
-        </Container>
+                    <div className="search-result mt-5">
+                        <h2 className="search-header">Search Result</h2>
+
+                        <ol className="activity-lists">
+                            {selectedOption === "Task" &&
+                                tasks &&
+                                tasks.map((task, id) => (
+                                    <li className="activity-listing" key={id}>
+                                        <>
+                                            <h3>
+                                                <Badge bg="secondary">
+                                                    {id + 1}
+                                                </Badge>
+                                                {task.name}
+                                            </h3>
+                                        </>
+                                        <p>{task.content}</p>
+                                        <div className="view-task">
+                                            <button>
+                                                {" "}
+                                                <Button
+                                                    variant="secondary custom"
+                                                    href={`/task/${task.id}`}
+                                                >
+                                                    View Task
+                                                </Button>
+                                            </button>
+                                        </div>
+                                    </li>
+                                ))}
+                        </ol>
+
+                        <ol className="activity-lists">
+                            {selectedOption === "Activity" &&
+                                activities &&
+                                activities.map((activity, id) => (
+                                    <li className="activity-listing" key={id}>
+                                        <>
+                                            <h3>
+                                                <Badge
+                                                    className="me-3"
+                                                    bg="secondary"
+                                                >
+                                                    {id + 1}
+                                                </Badge>
+                                                {activity.title}
+                                            </h3>
+                                            <p>{activity.description}</p>
+                                            <div className="view-task">
+                                                <button>
+                                                    <Button
+                                                        variant="secondary custom"
+                                                        href={`/activity/${activity.id}`}
+                                                    >
+                                                        View Task
+                                                    </Button>
+                                                </button>
+                                            </div>
+                                        </>
+                                    </li>
+                                ))}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 

@@ -2,16 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
-import {
-    Container,
-    Spinner,
-    ListGroup,
-    Card,
-    Button,
-    Stack,
-    Badge,
-    ProgressBar,
-} from "react-bootstrap";
+import { Spinner, Button, Stack, Badge, ProgressBar } from "react-bootstrap";
 
 const ActivityPage = () => {
     //DEFINE THE ACTIVITY OBJ

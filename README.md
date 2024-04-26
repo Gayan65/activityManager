@@ -49,3 +49,6 @@ npm install
 
 # Start the development server
 npm start
+
+### About Developers
+This an Web Application developed in PERN stack with the below mentioned developers
